@@ -1,0 +1,26 @@
+C:\Users\Alexandre\documents\visual studio 2010\Projects\NCHLStats\NCHLStats\obj\x86\Debug\NCHLStats.csprojResolveAssemblyReference.cache
+C:\Users\Alexandre\documents\visual studio 2010\Projects\NCHLStats\NCHLStats\bin\Debug\NCHLStats.exe
+C:\Users\Alexandre\documents\visual studio 2010\Projects\NCHLStats\NCHLStats\bin\Debug\NCHLStats.pdb
+C:\Users\Alexandre\documents\visual studio 2010\Projects\NCHLStats\NCHLStats\obj\x86\Debug\NCHLStats.exe
+C:\Users\Alexandre\documents\visual studio 2010\Projects\NCHLStats\NCHLStats\obj\x86\Debug\NCHLStats.pdb
+M:\NCHLStats\NCHLStats\obj\x86\Debug\NCHLStats.exe
+M:\NCHLStats\NCHLStats\obj\x86\Debug\NCHLStats.pdb
+M:\NCHLStats\NCHLStats\bin\Debug\NCHLStats.exe
+M:\NCHLStats\NCHLStats\bin\Debug\NCHLStats.pdb
+M:\NCHLStats\NCHLStats\obj\x86\Debug\NCHLStats.csprojResolveAssemblyReference.cache
+O:\NCHLStats\NCHLStats\obj\x86\Debug\NCHLStats.exe
+O:\NCHLStats\NCHLStats\obj\x86\Debug\NCHLStats.pdb
+O:\NCHLStats\NCHLStats\obj\x86\Debug\NCHLStats.csprojResolveAssemblyReference.cache
+O:\NCHLStats\NCHLStats\bin\Debug\NCHLStats.exe
+O:\NCHLStats\NCHLStats\bin\Debug\NCHLStats.pdb
+C:\Users\Alexandre\Documents\Visual Studio 2010\Projects\NCHLStats\NCHLStats\bin\Debug\Newtonsoft.Json.dll
+C:\Users\Alexandre\Documents\Visual Studio 2010\Projects\NCHLStats\NCHLStats\bin\Debug\Newtonsoft.Json.pdb
+C:\Users\Alexandre\Documents\Visual Studio 2010\Projects\NCHLStats\NCHLStats\bin\Debug\Newtonsoft.Json.xml
+N:\NCHLStats\NCHLStats\obj\x86\Debug\NCHLStats.exe
+N:\NCHLStats\NCHLStats\obj\x86\Debug\NCHLStats.pdb
+N:\NCHLStats\NCHLStats\obj\x86\Debug\NCHLStats.csprojResolveAssemblyReference.cache
+N:\NCHLStats\NCHLStats\bin\Debug\NCHLStats.exe
+N:\NCHLStats\NCHLStats\bin\Debug\NCHLStats.pdb
+N:\NCHLStats\NCHLStats\bin\Debug\Newtonsoft.Json.dll
+O:\NCHLStats\NCHLStats\bin\Debug\Newtonsoft.Json.pdb
+O:\NCHLStats\NCHLStats\bin\Debug\Newtonsoft.Json.xml
