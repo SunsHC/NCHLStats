@@ -67,7 +67,6 @@ namespace NCHLStats
 
                         if (MasterMode)
                         {
-                            writer.WriteElementString("PtsSystem", player.PtsSystem.ToString());
                             writer.WriteElementString("PctSystem", player.PctSystem.ToString());
                         }
 
