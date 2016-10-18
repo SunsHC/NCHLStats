@@ -24,3 +24,10 @@ N:\NCHLStats\NCHLStats\bin\Debug\NCHLStats.pdb
 N:\NCHLStats\NCHLStats\bin\Debug\Newtonsoft.Json.dll
 O:\NCHLStats\NCHLStats\bin\Debug\Newtonsoft.Json.pdb
 O:\NCHLStats\NCHLStats\bin\Debug\Newtonsoft.Json.xml
+E:\DOCS\prog\NCHLStats\NCHLStats\obj\x86\Debug\NCHLStats.exe
+E:\DOCS\prog\NCHLStats\NCHLStats\obj\x86\Debug\NCHLStats.pdb
+E:\DOCS\prog\NCHLStats\NCHLStats\bin\Debug\NCHLStats.exe
+E:\DOCS\prog\NCHLStats\NCHLStats\bin\Debug\NCHLStats.pdb
+E:\DOCS\prog\NCHLStats\NCHLStats\bin\Debug\Newtonsoft.Json.pdb
+E:\DOCS\prog\NCHLStats\NCHLStats\bin\Debug\Newtonsoft.Json.xml
+E:\DOCS\prog\NCHLStats\NCHLStats\obj\x86\Debug\NCHLStats.csprojResolveAssemblyReference.cache

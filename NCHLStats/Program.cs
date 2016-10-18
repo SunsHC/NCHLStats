@@ -22,7 +22,7 @@ namespace NCHLStats
             Console.WriteLine();
 
             Console.ForegroundColor = ConsoleColor.Gray;
-            Console.WriteLine("Entrer le type de fichier a generer (1)-Semaine (2)-Quart de saison ");
+            Console.WriteLine("Entrer le type de fichier a generer (1)Semaine (2)Quart de saison ");
             string mode = Console.ReadLine();
             string[] modeArray = mode.Split('.');
             int modeNumber = Convert.ToInt32(modeArray[0]);
@@ -32,6 +32,11 @@ namespace NCHLStats
             if (modeNumber == 1)
             {
                 Console.WriteLine();
+
+                Console.Write("Semaine (1-27): ");
+                int week = Convert.ToInt32(Console.ReadLine());
+
+                manager.CurrentWeek = week;
 
                 Console.ForegroundColor = ConsoleColor.Gray;
                 Console.WriteLine("Entrer la date du mardi ");
@@ -60,8 +65,8 @@ namespace NCHLStats
 
                 manager.SaveLeagueData();
 
-                Console.ForegroundColor = ConsoleColor.Gray;
-                Console.WriteLine("Voir  ");
+                if (manager.MasterMode)
+                    manager.SaveReportData(NCHLTeam.SUN);
             }
         }        
     }
