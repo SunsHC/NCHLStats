@@ -12,6 +12,7 @@ namespace NCHLStats
 {
     internal class StatsManager
     {
+        public Dictionary<int, List<Player>> PlayersForWeek { get; protected set; }
         public List<Player> Players { get; protected set; }
         public bool MasterMode { get; set; }
 
@@ -40,6 +41,22 @@ namespace NCHLStats
             }
         }
 
+        internal void LoadJSONs()
+        {
+            using (StreamReader jsonReader = new StreamReader(string.Format("SeasonStats.json")))
+            {
+                string s = jsonReader.ReadLine();
+                object o = JsonConvert.DeserializeObject(s, typeof(List<Player>));
+            }
+
+            using (StreamReader jsonReader = new StreamReader(string.Format("Week1Stats.json")))
+            {
+                string s = jsonReader.ReadLine();
+                object o = JsonConvert.DeserializeObject(s, typeof(List<Player>));
+            }
+        }
+        
+
         public void SaveReportData(NCHLTeam team)
         {
             try
@@ -58,63 +75,84 @@ namespace NCHLStats
 
                         // Write Position
                         sb.AppendLine(string.Format("{0}", pos));
-                        sb.AppendLine("----------------------------------------");
+                        sb.Append("--------------------------------");
+                        if (pos != PlayerPosition.G)
+                            sb.Append("[GP|P|PIM|Hits|BkS|TkA|SH]");
+                        sb.AppendLine();
 
-                        // Get max string lenght of the player
-                        int maxPlayerNameLenght = players.Max(p => p.Name.Length);
-
-
-                        foreach (Player playerToWriteCSV in players)
+                        if (players.Count > 0)
                         {
-                            // Write Name
-                            sb.Append(playerToWriteCSV.Name);
 
-                            // Fill the rest with dots
-                            int dotsToWrite = maxPlayerNameLenght - playerToWriteCSV.Name.Length;
-                            for (int i = 0; i < dotsToWrite; i++)
-                            {
-                                sb.Append(".");
-                            }
+                            // Get max string lenght of the player
+                            int maxPlayerNameLenght = players.Max(p => p.Name.Length);
 
-                            // Create bar
-                            string bar = string.Empty;
-                            int maxScore;
-                            int valueToUse;
 
-                            if (pos != PlayerPosition.G)
+                            foreach (Player playerToWriteCSV in players)
                             {
-                                maxScore = 100;
-                                valueToUse = (int)playerToWriteCSV.PctSystem;
-                            }
-                            else
-                            {
-                                maxScore = players.Max(p => p.TOI);
-                                valueToUse = playerToWriteCSV.TOI;
-                            }
+                                // Write Name
+                                sb.Append(playerToWriteCSV.Name);
 
-                            for (int i = maxScore / 10; i <= maxScore; i += maxScore / 10)
-                            {
-                                if (valueToUse >= i)
-                                    bar += "█";
+                                // Fill the rest with dots
+                                int dotsToWrite = maxPlayerNameLenght - playerToWriteCSV.Name.Length;
+                                for (int i = 0; i < dotsToWrite; i++)
+                                {
+                                    sb.Append(".");
+                                }
+
+                                // Create bar
+                                string bar = string.Empty;
+                                int maxScore;
+                                int valueToUse;
+
+                                if (pos != PlayerPosition.G)
+                                {
+                                    maxScore = 100;
+                                    valueToUse = (int)playerToWriteCSV.PctSystem;
+                                }
                                 else
-                                    bar += "░";
+                                {
+                                    maxScore = players.Max(p => p.TOI);
+                                    valueToUse = playerToWriteCSV.TOI;
+                                }
+
+                                for (int i = maxScore / 10; i <= maxScore; i += maxScore / 10)
+                                {
+                                    if (valueToUse >= i)
+                                        bar += "█";
+                                    else
+                                        bar += "░";
+                                }
+
+                                // Fill gap properly between number and bar
+                                int valueStringLenght = valueToUse.ToString().Length;
+                                string gap = string.Empty;
+                                for (int i = (4 - valueStringLenght); i > 0; i--)
+                                {
+                                    gap += " ";
+                                }
+
+                                // Show stats at right of player (not goalies)
+                                string stats = string.Empty;
+                                if (pos != PlayerPosition.G)
+                                {
+                                    stats = string.Format("[{0}|{1}|{2}|{3}|{4}|{5}|{6}]",
+                                        playerToWriteCSV.GP,
+                                        playerToWriteCSV.P,
+                                        playerToWriteCSV.PIM,
+                                        playerToWriteCSV.Hits,
+                                        playerToWriteCSV.BkS,
+                                        playerToWriteCSV.TkA,
+                                        playerToWriteCSV.SH);
+                                }
+
+                                sb.Append(string.Format("{0}{1} {2} {3}", gap, valueToUse, bar, stats));
+
+                                sb.AppendLine();
                             }
 
-                            // Fill gap properly between number and bar
-                            int valueStringLenght = valueToUse.ToString().Length;
-                            string gap = string.Empty;
-                            for (int i = (4 - valueStringLenght); i > 0; i--)
-                            {
-                                gap += " ";
-                            }
-
-                            sb.Append(string.Format("{0}{1} {2}", gap, valueToUse, bar));
-
-                            sb.AppendLine();
+                            sw.WriteLine(sb.ToString());
                         }
-
-                        sw.WriteLine(sb.ToString());
-                    }                    
+                    }
                 }
             }
             catch
@@ -235,7 +273,6 @@ namespace NCHLStats
                 retreiverProgress.Update();
             }
         }
-
 
         private void CreatePlayersListFromJsonList(List<JsonPlayer> jsonPlayers)
         {

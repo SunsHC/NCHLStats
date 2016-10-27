@@ -31,6 +31,8 @@ namespace NCHLStats
 
             if (modeNumber == 1)
             {
+                //manager.LoadJSON();
+
                 Console.WriteLine();
 
                 Console.Write("Semaine (1-27): ");
