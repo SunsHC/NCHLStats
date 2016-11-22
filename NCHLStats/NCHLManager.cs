@@ -13,10 +13,11 @@ namespace NCHLStats
     internal class StatsManager
     {
         public Dictionary<int, List<Player>> PlayersForWeek { get; protected set; }
-        public Dictionary<int, Dictionary<int, List<Player>>> PlayersForWeek { get; protected set; }
+        //public Dictionary<int, Dictionary<int, List<Player>>> PlayersForWeek { get; protected set; }
         public List<Player> Players { get; protected set; }
         public bool MasterMode { get; set; }
         public int CurrentWeek { get; set; }
+        public int CurrentQuarter { get; set; }
 
         internal StatsManager()
         {
@@ -76,7 +77,7 @@ namespace NCHLStats
                         StringBuilder sb = new StringBuilder();
 
                         List<Player> players;
-                        for
+
                         if (pos != PlayerPosition.G)
                             players = Players.Where(p => p.NCHLTeam == team && p.Pos == pos).OrderBy(pl => pl.PctSystem).Reverse().ToList();
                         else
@@ -168,13 +169,19 @@ namespace NCHLStats
             {
             }
         }
-        
 
-        public void SaveReportData(NCHLTeam team)
+
+        public void SaveReportData(NCHLTeam team, bool isWeekStats)
         {
             try
             {
-                using (StreamWriter sw = new StreamWriter(string.Format("Week{0}Report.txt", CurrentWeek)))
+                string fileName;
+                if (isWeekStats)
+                    fileName = string.Format("Week{0}Report.xml", CurrentWeek);
+                else
+                    fileName = string.Format("Quarter{0}Report.xml", CurrentQuarter);
+
+                using (StreamWriter sw = new StreamWriter(fileName))
                 {
                     foreach (PlayerPosition pos in Enum.GetValues(typeof(PlayerPosition)))
                     {
@@ -273,11 +280,17 @@ namespace NCHLStats
             }
         }
 
-        public void SaveLeagueData()
+        public void SaveLeagueData(bool isWeekStats)
         {
             try
             {
-                using (XmlWriter writer = XmlWriter.Create(string.Format("Week{0}Stats.xml", CurrentWeek)))
+                string fileName;
+                if (isWeekStats)
+                    fileName = string.Format("Week{0}Stats.xml", CurrentWeek);
+                else
+                    fileName = string.Format("Quarter{0}Stats.xml", CurrentQuarter);
+
+                using (XmlWriter writer = XmlWriter.Create(fileName))
                 {
                     writer.WriteStartDocument();
                     writer.WriteStartElement("Players");
@@ -406,8 +419,8 @@ namespace NCHLStats
                         string bioJsonHTMLLink = string.Format("http://statsapi.web.nhl.com/api/v1/people/{0}", jsonPlayerId);
                         string htmlCode = client.DownloadString(bioJsonHTMLLink);
                         JsonBios jsonBiosPlayers = JsonConvert.DeserializeObject<JsonBios>(htmlCode);
-                        if (jsonBiosPlayers.people.First().currentTeam != null)
-                            currentPlayer.NHLTeam = Utilities.GetNHLTeamFromString(jsonBiosPlayers.people.First().currentTeam.triCode);
+                        //if (jsonBiosPlayers.people.First().currentTeam != null)
+                            //currentPlayer.NHLTeam = Utilities.GetNHLTeamFromString(jsonBiosPlayers.people.First().currentTeam.triCode);
                     }                                        
                 }
                 else

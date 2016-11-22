@@ -65,10 +65,52 @@ namespace NCHLStats
                 if (manager.MasterMode)
                     manager.GetSystemRankings();
 
-                manager.SaveLeagueData();
+                manager.SaveLeagueData(true);
 
                 if (manager.MasterMode)
-                    manager.SaveReportData(NCHLTeam.SUN);
+                    manager.SaveReportData(NCHLTeam.SUN, true);
+            }
+            else if (modeNumber == 2)
+            {
+                Console.WriteLine();
+
+                Console.Write("Quart (1-4): ");
+                int quarter = Convert.ToInt32(Console.ReadLine());
+
+                manager.CurrentQuarter = quarter;
+
+                Console.ForegroundColor = ConsoleColor.Gray;
+                Console.WriteLine("Entrer la date du mardi du debut du quart ");
+
+                Console.ForegroundColor = ConsoleColor.DarkGray;
+                Console.Write("Jour (1-31): ");
+                int day = Convert.ToInt32(Console.ReadLine());
+
+                Console.Write("Mois (1-12): ");
+                int month = Convert.ToInt32(Console.ReadLine());
+
+                Console.Write("An (2000-2099): ");
+                int year = Convert.ToInt32(Console.ReadLine());
+
+                Console.Write("Nombre de semaines dans le quart (6-7): ");
+                int weeksInQuarter = Convert.ToInt32(Console.ReadLine());
+
+                Console.WriteLine();
+
+                DateTime startDate = new DateTime(year, month, day, new System.Globalization.GregorianCalendar());
+                DateTime endDate = startDate.AddDays(7 * weeksInQuarter);
+
+                manager.RetrieveWebData(startDate, endDate);
+
+                manager.LoadNCHLDB();
+
+                if (manager.MasterMode)
+                    manager.GetSystemRankings();
+
+                manager.SaveLeagueData(false);
+
+                if (manager.MasterMode)
+                    manager.SaveReportData(NCHLTeam.SUN, false);
             }
         }        
     }
