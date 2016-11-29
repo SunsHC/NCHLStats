@@ -23,8 +23,8 @@ namespace NCHLStats
         G,
         D,
         C,
-        L,
-        R
+        R,
+        L
     }
 
     public enum NCHLTeam

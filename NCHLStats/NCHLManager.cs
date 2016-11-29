@@ -22,6 +22,7 @@ namespace NCHLStats
         internal StatsManager()
         {
             Players = new List<Player>();
+            PlayersForWeek = new Dictionary<int, List<Player>>();
         }
         
         internal void LoadNCHLDB()
@@ -46,11 +47,11 @@ namespace NCHLStats
 
         internal void LoadJSONs()
         {
-            using (StreamReader jsonReader = new StreamReader(string.Format("SeasonStats.json")))
-            {
-                string s = jsonReader.ReadLine();
-                object o = JsonConvert.DeserializeObject(s, typeof(List<Player>));
-            }
+            //using (StreamReader jsonReader = new StreamReader(string.Format("SeasonStats.json")))
+            //{
+            //    string s = jsonReader.ReadLine();
+            //    object o = JsonConvert.DeserializeObject(s, typeof(List<Player>));
+            //}
 
             for (int i = 1; i <= 27; i++)
             {
