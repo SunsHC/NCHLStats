@@ -341,16 +341,16 @@ namespace NCHLStats
 
         internal void RetrieveWebData(DateTime startDate, DateTime endDate)
         {
-            string scoringJsonHTMLLink = string.Format("http://www.nhl.com/stats/rest/individual/skaters/game/skatersummary?cayenneExp=gameDate%3E=%22{0}-{1}-{2}T05:00:00.000Z%22%20and%20gameDate%3C=%22{3}-{4}-{5}T05:00:00.000Z%22%20and%20gameTypeId=2",
+            string scoringJsonHTMLLink = string.Format("http://www.nhl.com/stats/rest/individual/skaters/basic/game/skatersummary?cayenneExp=gameDate%3E=%22{0}-{1}-{2}T05:00:00.000Z%22%20and%20gameDate%3C=%22{3}-{4}-{5}T05:00:00.000Z%22%20and%20gameTypeId=2",
                 startDate.Year, startDate.Month, startDate.Day, endDate.Year, endDate.Month, endDate.Day);
 
-            string defensiveJsonHTMLLink = string.Format("http://www.nhl.com/stats/rest/individual/skaters/game/realtime?cayenneExp=gameDate%3E=%22{0}-{1}-{2}T05:00:00.000Z%22%20and%20gameDate%3C=%22{3}-{4}-{5}T05:00:00.000Z%22%20and%20gameTypeId=2",
+            string defensiveJsonHTMLLink = string.Format("http://www.nhl.com/stats/rest/individual/skaters/basic/game/realtime?cayenneExp=gameDate%3E=%22{0}-{1}-{2}T05:00:00.000Z%22%20and%20gameDate%3C=%22{3}-{4}-{5}T05:00:00.000Z%22%20and%20gameTypeId=2",
                 startDate.Year, startDate.Month, startDate.Day, endDate.Year, endDate.Month, endDate.Day);
 
-            string timeOnIceJsonHTMLLink = string.Format("http://www.nhl.com/stats/rest/individual/skaters/game/timeonice?cayenneExp=gameDate%3E=%22{0}-{1}-{2}T05:00:00.000Z%22%20and%20gameDate%3C=%22{3}-{4}-{5}T05:00:00.000Z%22%20and%20gameTypeId=2",
+            string timeOnIceJsonHTMLLink = string.Format("http://www.nhl.com/stats/rest/individual/skaters/basic/game/timeonice?cayenneExp=gameDate%3E=%22{0}-{1}-{2}T05:00:00.000Z%22%20and%20gameDate%3C=%22{3}-{4}-{5}T05:00:00.000Z%22%20and%20gameTypeId=2",
                 startDate.Year, startDate.Month, startDate.Day, endDate.Year, endDate.Month, endDate.Day);
 
-            string goalieJsonHTMLLink = string.Format("http://www.nhl.com/stats/rest/individual/goalies/game/goaliesummary?cayenneExp=gameDate%3E=%22{0}-{1}-{2}T05:00:00.000Z%22%20and%20gameDate%3C=%22{3}-{4}-{5}T05:00:00.000Z%22%20and%20gameTypeId=2%20and%20playerPositionCode=%22G%22",
+            string goalieJsonHTMLLink = string.Format("http://www.nhl.com/stats/rest/individual/goalies/goalie_basic/game/goaliesummary?cayenneExp=gameDate%3E=%22{0}-{1}-{2}T05:00:00.000Z%22%20and%20gameDate%3C=%22{3}-{4}-{5}T05:00:00.000Z%22%20and%20gameTypeId=2%20and%20playerPositionCode=%22G%22",
                 startDate.Year, startDate.Month, startDate.Day, endDate.Year, endDate.Month, endDate.Day);
 
             Console.ForegroundColor = ConsoleColor.DarkCyan;
