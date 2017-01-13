@@ -12,6 +12,13 @@ namespace NCHLStats
     {
         static void Main(string[] args)
         {
+            Dictionary<int, double> dict = new Dictionary<int, double>();
+            dict.Add(1, 95);
+            dict.Add(2, 65);
+            BarGraph bg = new BarGraph(dict, 1, 2, 1, 0, 100, 10);
+
+
+
             StatsManager manager = new StatsManager();
 
             Console.ForegroundColor = ConsoleColor.DarkYellow;
@@ -22,17 +29,15 @@ namespace NCHLStats
             Console.WriteLine();
 
             Console.ForegroundColor = ConsoleColor.Gray;
-            Console.WriteLine("Entrer le type de fichier a generer (1)Semaine (2)Quart de saison ");
+            Console.WriteLine("Entrer le type de fichier a generer (1)Semaine (2)Saison ");
             string mode = Console.ReadLine();
             string[] modeArray = mode.Split('.');
             int modeNumber = Convert.ToInt32(modeArray[0]);
             if (modeArray.Length > 1)
-                manager.MasterMode = modeArray[1] == "a";
+                manager.MasterMode = modeArray[1] == "1992";
 
             if (modeNumber == 1)
             {
-                //manager.LoadJSON();
-
                 Console.WriteLine();
 
                 Console.Write("Semaine (1-27): ");
@@ -80,7 +85,7 @@ namespace NCHLStats
                 manager.CurrentQuarter = quarter;
 
                 Console.ForegroundColor = ConsoleColor.Gray;
-                Console.WriteLine("Entrer la date du mardi du debut du quart ");
+                Console.WriteLine("Entrer la date du premier match de la saison ");
 
                 Console.ForegroundColor = ConsoleColor.DarkGray;
                 Console.Write("Jour (1-31): ");
@@ -92,13 +97,23 @@ namespace NCHLStats
                 Console.Write("An (2000-2099): ");
                 int year = Convert.ToInt32(Console.ReadLine());
 
-                Console.Write("Nombre de semaines dans le quart (6-7): ");
-                int weeksInQuarter = Convert.ToInt32(Console.ReadLine());
+                Console.ForegroundColor = ConsoleColor.Gray;
+                Console.WriteLine(string.Format("Entrer la date du premier mardi du quart {0} ", quarter + 1));
+
+                Console.ForegroundColor = ConsoleColor.DarkGray;
+                Console.Write("Jour (1-31): ");
+                int endDay = Convert.ToInt32(Console.ReadLine());
+
+                Console.Write("Mois (1-12): ");
+                int endMonth = Convert.ToInt32(Console.ReadLine());
+
+                Console.Write("An (2000-2099): ");
+                int endYear = Convert.ToInt32(Console.ReadLine());
 
                 Console.WriteLine();
 
                 DateTime startDate = new DateTime(year, month, day, new System.Globalization.GregorianCalendar());
-                DateTime endDate = startDate.AddDays(7 * weeksInQuarter);
+                DateTime endDate = new DateTime(endYear, endMonth, endDay, new System.Globalization.GregorianCalendar());
 
                 manager.RetrieveWebData(startDate, endDate);
 
@@ -110,7 +125,15 @@ namespace NCHLStats
                 manager.SaveLeagueData(false);
 
                 if (manager.MasterMode)
-                    manager.SaveReportData(NCHLTeam.SUN, false);
+                {
+                    foreach (NCHLTeam team in Enum.GetValues(typeof(NCHLTeam)))
+                    {
+                        if (team == NCHLTeam.AGL)
+                            continue;
+
+                        manager.SaveReportData(team, false);
+                    }
+                }
             }
         }        
     }

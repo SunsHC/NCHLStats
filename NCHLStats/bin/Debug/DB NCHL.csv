@@ -35,7 +35,7 @@ Alex Goligoski,BUC,D,8471274
 Matt Niskanen,REB,D,8471702
 Roman Josi,RAM,D,8474600
 Brayden McNabb,BUC,D,8475188
-Gustav Nyquist,RAM,L,8474679
+Gustav Nyquist,RAM,R,8474679
 Jaden Schwartz,RAM,L,8475768
 Brian Elliott,RAM,G,8470880
 Marc-Andre Fleury,RAM,G,8470594
@@ -61,7 +61,7 @@ Niklas Kronwall,PAC,D,8468509
 P.K. Subban,PAC,D,8474056
 John Carlson,PAC,D,8474590
 Chris Stewart,PAC,R,8473485
-Matt Duchene,PAC,R,8475168
+Matt Duchene,PAC,C,8475168
 Alexander Steen,PAC,L,8470257
 Ryan Johansen,PAC,C,8475793
 Cam Atkinson,PAC,R,8474715
@@ -125,7 +125,7 @@ Drew Doughty,REB,D,8474563
 Oliver Ekman-Larsson,PAC,D,8475171
 Kyle Turris,BUC,C,8474068
 Erik Johnson,REB,D,8473446
-Mikkel Boedker,REB,R,8474571
+Mikkel Boedker,REB,L,8474571
 Justin Faulk,REB,D,8475753
 Brayden Schenn,REB,L,8475170
 Jake Gardiner,REB,D,8474581
@@ -142,14 +142,14 @@ Mikael Granlund,SUN,R,8475798
 Jonathan Huberdeau,SUN,L,8476456
 J.T. Miller,SUN,L,8476468
 Vladislav Namestnikov,SUN,C,8476480
-Jason Spezza,SUN,C,8469455
+Jason Spezza,SUN,R,8469455
 Patrick Sharp,BUC,R,8469544
 Max Pacioretty,SUN,L,8474157
 Bobby Ryan,SUN,R,8471676
 Brad Marchand,SUN,L,8473419
 Paul Stastny,SUN,C,8471669
 Alex Pietrangelo,SUN,D,8474565
-Adam Henrique,SUN,L,8474641
+Adam Henrique,SUN,C,8474641
 Nick Foligno,RAM,R,8473422
 Nicklas Backstrom,SUN,C,8473563
 Brent Burns,SUN,D,8470613
@@ -192,7 +192,7 @@ Jake Allen,SUN,G,8474596
 Tomas Tatar,BUC,R,8475193
 Eddie Lack,PAC,G,8475663
 Olli Maatta,RAM,D,8476874
-Seth Jones,BUC,D,8477495
+Seth Jones,SUN,D,8477495
 Hampus Lindholm,RAM,D,8476854
 Ryan Murray,RAM,D,8476850
 Matt Dumba,REB,D,8476856
@@ -208,7 +208,7 @@ Sami Vatanen,PAC,D,8475222
 Boone Jenner,RAM,L,8476432
 Tyler Toffoli,BUC,R,8475726
 Charlie Coyle,REB,R,8475745
-Zemgus Girgensons,SUN,C,8476878
+Zemgus Girgensons,SUN,L,8476878
 Morgan Rielly,BUC,D,8476853
 Alex Killorn,SUN,L,8473986
 Marc-Edouard Vlasic,RAM,D,8471709
@@ -216,10 +216,10 @@ Antti Raanta,RAM,G,8477293
 Carter Hutton,REB,G,8475622
 Danny DeKeyser,PAC,D,8477215
 Jake Muzzin,SUN,D,8474162
-Carl Soderberg,PAC,L,8471262
+Carl Soderberg,PAC,C,8471262
 Matt Nieto,SUN,L,8476442
 Brandon Pirri,RAM,C,8475204
-Ryan Spooner,RAM,L,8475727
+Ryan Spooner,RAM,C,8475727
 Ondrej Palat,RAM,L,8476292
 Jaromir Jagr,BUC,R,8448208
 Martin Jones,BUC,G,8474889
@@ -255,7 +255,7 @@ Chad Johnson,BUC,G,8473434
 Linus Ullmark,REB,G,8476999
 Mikko Koskinen,PAC,G,8475156
 Philipp Grubauer,REB,G,8475831
-Kevin Hayes,PAC,R,8475763
+Kevin Hayes,PAC,C,8475763
 Troy Brouwer,BUC,R,8471426
 Kristers Gudlevskis,REB,G,8477356
 Jonathan Drouin,BUC,R,8477494
@@ -278,14 +278,14 @@ Noah Juulsen,SUN,D,8478454
 David Pastrnak,RAM,R,8477956
 Connor McDavid,BUC,C,8478402
 Jack Eichel,RAM,C,8478403
-Mitchell Marner,REB,C,8478483
+Mitchell Marner,REB,R,8478483
 Noah Hanifin,BUC,D,8478396
 Ivan Provorov,RAM,D,8478500
-Mikko Rantanen,PAC,R,8478420
+Mikko Rantanen,PAC,L,8478420
 Nikita Kucherov,RAM,R,8476453
 Rasmus Ristolainen,REB,D,8477499
 Malcolm Subban,BUC,G,8476876
-Nic Petan,REB,C,8477464
+Nic Petan,REB,L,8477464
 Nick Schmaltz,REB,D,8477951
 Max Domi,PAC,L,8477503
 John Klingberg,RAM,D,8475906
@@ -303,11 +303,11 @@ Madison Bowey,REB,D,8477474
 Colin Miller,RAM,D,8476525
 Viktor Arvidsson,REB,L,8478042
 Oscar Klefbom,SUN,D,8476472
-Pavel Buchnevich,BUC,R,8477402
+Pavel Buchnevich,BUC,L,8477402
 Joonas Donskoi,PAC,R,8475820
 Mackenzie Skapski,BUC,G,8477084
 Adrian Kempe,SUN,L,8477960
-Brayden Point,REB,C,8478010
+Brayden Point,REB,L,8478010
 Ben Hutton,RAM,D,8477018
 Cole Cassels,SUN,C,8477412
 Zane McIntyre,REB,G,8475876
@@ -322,7 +322,7 @@ Dougie Hamilton,BUC,D,8476462
 Travis Hamonic,BUC,D,8474612
 Brandon Dubinsky,BUC,C,8471273
 Evander Kane,BUC,L,8475169
-David Backes,REB,C,8470655
+David Backes,REB,R,8470655
 Jason Pominville,BUC,R,8469506
 Henrik Zetterberg,BUC,L,8468083
 Valtteri Filppula,BUC,C,8470047
@@ -358,7 +358,7 @@ Matt Puempel,REB,L,8476477
 Curtis Lazar,REB,R,8477508
 Auston Matthews,REB,C,8479318
 Jesse Puljujarvi,REB,R,8479344
-Patrik Laine,RAM,R,8479339
+Patrik Laine,RAM,L,8479339
 Pierre-Luc Dubois,SUN,L,8479400
 Matthew Tkachuk,BUC,L,8479314
 Olli Juolevi,BUC,D,8479355
@@ -399,7 +399,7 @@ Ilya Sorokin,BUC,G,8478009
 Igor Shesterkin,PAC,G,8478048
 Sebastian Aho,BUC,R,8478427
 Jaccob Slavin,PAC,D,8476958
-Tyler Motte,RAM,C,8477353
+Tyler Motte,RAM,L,8477353
 Joonas Korpisalo,SUN,G,8476914
 Jared Coreau,PAC,G,8477225
 Esa Lindell,PAC,D,8476902
@@ -427,3 +427,4 @@ Zach Werenski,REB,D,8478460
 Lawson Crouse,BUC,L,8478474
 Anthony Mantha,SUN,R,8477511
 Matt Murray,BUC,G,8476899
+Anthony Beauvillier,PAC,L,8478463

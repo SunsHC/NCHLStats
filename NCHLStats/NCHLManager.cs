@@ -178,9 +178,9 @@ namespace NCHLStats
             {
                 string fileName;
                 if (isWeekStats)
-                    fileName = string.Format("Week{0}Report.xml", CurrentWeek);
+                    fileName = string.Format("Week{0}Report{1}.xml", CurrentWeek, team.ToString());
                 else
-                    fileName = string.Format("Quarter{0}Report.xml", CurrentQuarter);
+                    fileName = string.Format("Quarter{0}Report{1}.xml", CurrentQuarter, team.ToString());
 
                 using (StreamWriter sw = new StreamWriter(fileName))
                 {
@@ -331,6 +331,8 @@ namespace NCHLStats
                 }
 
                 LoadJSONs();
+
+
 
 
             }

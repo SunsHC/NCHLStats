@@ -46,6 +46,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BarGraph.cs" />
     <Compile Include="Enums.cs" />
     <Compile Include="JsonObjects.cs" />
     <Compile Include="NCHLManager.cs" />
