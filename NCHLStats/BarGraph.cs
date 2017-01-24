@@ -7,16 +7,19 @@ namespace NCHLStats
 {
     internal class BarGraph
     {
-        public BarGraph(Dictionary<int, double> XYData, int minX, int maxX, int scaleX, int minY, int maxY, int scaleY)
+        public static string Generate(Dictionary<int, double> XYData, string title, int minX, int maxX, int scaleX, int minY, int maxY, int scaleY)
         {
             StringBuilder sb = new StringBuilder();
+            sb.Append(title + "\n");
 
             for (int i = maxY; i > minY; i -= scaleY)
             {
-                if ((i - scaleY) == 0)
+                if (i - scaleY < 10)
                     sb.Append(string.Format("{0}  ", i - scaleY));
-                else
+                else if (i - scaleY >= 10 && i - scaleY < 100)
                     sb.Append(string.Format("{0} ", i - scaleY));
+                else if (i - scaleY >= 100)
+                    sb.Append(string.Format("{0}", i - scaleY));
 
                 for (int j = minX; j <= maxX; j += scaleX)
                 {
@@ -43,6 +46,9 @@ namespace NCHLStats
                 else
                     sb.Append(string.Format("{0} ", i));
             }
+            sb.Append("\n\n");
+
+            return sb.ToString();
         }
     }
 }

@@ -47,18 +47,12 @@ namespace NCHLStats
 
         internal void LoadJSONs()
         {
-            //using (StreamReader jsonReader = new StreamReader(string.Format("SeasonStats.json")))
-            //{
-            //    string s = jsonReader.ReadLine();
-            //    object o = JsonConvert.DeserializeObject(s, typeof(List<Player>));
-            //}
-
             for (int i = 1; i <= 27; i++)
             {
-                if (!File.Exists(string.Format("Week{0}Stats.json", i)))
+                if (!File.Exists(string.Format("WeekStats\\Week{0}Stats.json", i)))
                     break;
 
-                using (StreamReader jsonReader = new StreamReader(string.Format("Week{0}Stats.json", i)))
+                using (StreamReader jsonReader = new StreamReader(string.Format("WeekStats\\Week{0}Stats.json", i)))
                 {
                     string s = jsonReader.ReadLine();
                     var weekPlayers = JsonConvert.DeserializeObject(s, typeof(List<Player>)) as List<Player>;
@@ -67,109 +61,216 @@ namespace NCHLStats
             }            
         }
 
-        public void SaveSeasonReport(NCHLTeam team)
+        //public void SaveSeasonReport(NCHLTeam team)
+        //{
+        //    try
+        //    {
+        //        using (StreamWriter sw = new StreamWriter("SeasonReport.txt"))
+        //        {
+        //            foreach (PlayerPosition pos in Enum.GetValues(typeof(PlayerPosition)))
+        //            {
+        //                StringBuilder sb = new StringBuilder();
+
+        //                List<Player> players;
+
+        //                if (pos != PlayerPosition.G)
+        //                    players = Players.Where(p => p.NCHLTeam == team && p.Pos == pos).OrderBy(pl => pl.PctSystem).Reverse().ToList();
+        //                else
+        //                    players = Players.Where(p => p.NCHLTeam == team && p.Pos == pos).OrderBy(pl => pl.TOI).Reverse().ToList();
+
+        //                // Write Position
+        //                sb.AppendLine(string.Format("{0}", pos));
+        //                sb.Append("--------------------------------");
+        //                if (pos != PlayerPosition.G)
+        //                    sb.Append("[GP|P|PIM|Hits|BkS|TkA|SH]");
+        //                sb.AppendLine();
+
+        //                if (players.Count > 0)
+        //                {
+
+        //                    // Get max string lenght of the player
+        //                    int maxPlayerNameLenght = players.Max(p => p.Name.Length);
+
+
+        //                    foreach (Player playerToWriteCSV in players)
+        //                    {
+        //                        // Write Name
+        //                        sb.Append(playerToWriteCSV.Name);
+
+        //                        // Fill the rest with dots
+        //                        int dotsToWrite = maxPlayerNameLenght - playerToWriteCSV.Name.Length;
+        //                        for (int i = 0; i < dotsToWrite; i++)
+        //                        {
+        //                            sb.Append(".");
+        //                        }
+
+        //                        // Create bar
+        //                        string bar = string.Empty;
+        //                        int maxScore;
+        //                        int valueToUse;
+
+        //                        if (pos != PlayerPosition.G)
+        //                        {
+        //                            maxScore = 100;
+        //                            valueToUse = (int)playerToWriteCSV.PctSystem;
+        //                        }
+        //                        else
+        //                        {
+        //                            maxScore = players.Max(p => p.TOI);
+        //                            valueToUse = playerToWriteCSV.TOI;
+        //                        }
+
+        //                        for (int i = maxScore / 10; i <= maxScore; i += maxScore / 10)
+        //                        {
+        //                            if (valueToUse >= i)
+        //                                bar += "█";
+        //                            else
+        //                                bar += "░";
+        //                        }
+
+        //                        // Fill gap properly between number and bar
+        //                        int valueStringLenght = valueToUse.ToString().Length;
+        //                        string gap = string.Empty;
+        //                        for (int i = (4 - valueStringLenght); i > 0; i--)
+        //                        {
+        //                            gap += " ";
+        //                        }
+
+        //                        // Show stats at right of player (not goalies)
+        //                        string stats = string.Empty;
+        //                        if (pos != PlayerPosition.G)
+        //                        {
+        //                            stats = string.Format("[{0}|{1}|{2}|{3}|{4}|{5}|{6}]",
+        //                                playerToWriteCSV.GP,
+        //                                playerToWriteCSV.P,
+        //                                playerToWriteCSV.PIM,
+        //                                playerToWriteCSV.Hits,
+        //                                playerToWriteCSV.BkS,
+        //                                playerToWriteCSV.TkA,
+        //                                playerToWriteCSV.SH);
+        //                        }
+
+        //                        sb.Append(string.Format("{0}{1} {2} {3}", gap, valueToUse, bar, stats));
+
+        //                        sb.AppendLine();
+        //                    }
+
+        //                    sw.WriteLine(sb.ToString());
+        //                }
+        //            }
+        //        }
+        //    }
+        //    catch
+        //    {
+        //    }
+        //}
+
+        public void SaveGraph(NCHLTeam team)
         {
+
             try
             {
-                using (StreamWriter sw = new StreamWriter("SeasonReport.txt"))
+                foreach (PlayerPosition playPos in Enum.GetValues(typeof(PlayerPosition)))
                 {
-                    foreach (PlayerPosition pos in Enum.GetValues(typeof(PlayerPosition)))
+                    using (StreamWriter sw = new StreamWriter(string.Format("Graphs\\Graph{0}-{1}.txt", team, playPos)))
                     {
                         StringBuilder sb = new StringBuilder();
+                        Dictionary<int, Player> playersToScan = new Dictionary<int, Player>();
 
-                        List<Player> players;
-
-                        if (pos != PlayerPosition.G)
-                            players = Players.Where(p => p.NCHLTeam == team && p.Pos == pos).OrderBy(pl => pl.PctSystem).Reverse().ToList();
-                        else
-                            players = Players.Where(p => p.NCHLTeam == team && p.Pos == pos).OrderBy(pl => pl.TOI).Reverse().ToList();
-
-                        // Write Position
-                        sb.AppendLine(string.Format("{0}", pos));
-                        sb.Append("--------------------------------");
-                        if (pos != PlayerPosition.G)
-                            sb.Append("[GP|P|PIM|Hits|BkS|TkA|SH]");
-                        sb.AppendLine();
-
-                        if (players.Count > 0)
+                        // 1- Get players to scan
+                        foreach (KeyValuePair<int, List<Player>> p in PlayersForWeek)
                         {
-
-                            // Get max string lenght of the player
-                            int maxPlayerNameLenght = players.Max(p => p.Name.Length);
-
-
-                            foreach (Player playerToWriteCSV in players)
+                            foreach (Player player in p.Value)
                             {
-                                // Write Name
-                                sb.Append(playerToWriteCSV.Name);
+                                if (player.NCHLTeam == team && player.Pos == playPos && !playersToScan.ContainsKey(player.Id))
+                                    playersToScan.Add(player.Id, player);
+                            }
+                        }
 
-                                // Fill the rest with dots
-                                int dotsToWrite = maxPlayerNameLenght - playerToWriteCSV.Name.Length;
-                                for (int i = 0; i < dotsToWrite; i++)
-                                {
-                                    sb.Append(".");
-                                }
+                        List<Tuple<double, string>> playSorting = new List<Tuple<double, string>>();
 
-                                // Create bar
-                                string bar = string.Empty;
-                                int maxScore;
-                                int valueToUse;
+                        // 2- Get their stats
+                        foreach (KeyValuePair<int, Player> p in playersToScan)
+                        {
+                            Player playerPos = Players.FirstOrDefault(pp => pp.Id == p.Key);
+                            if (playerPos != null && (playerPos.Pos != playPos || playerPos.NCHLTeam != team))
+                                continue;
 
-                                if (pos != PlayerPosition.G)
-                                {
-                                    maxScore = 100;
-                                    valueToUse = (int)playerToWriteCSV.PctSystem;
-                                }
-                                else
-                                {
-                                    maxScore = players.Max(p => p.TOI);
-                                    valueToUse = playerToWriteCSV.TOI;
-                                }
+                            string currentPlayerName = p.Value.Name;
+                            int currentPlayerId = p.Key;
+                            Dictionary<int, double> playerStatForWeek = new Dictionary<int, double>();
 
-                                for (int i = maxScore / 10; i <= maxScore; i += maxScore / 10)
+                            foreach (KeyValuePair<int, List<Player>> pfw in PlayersForWeek)
+                            {
+                                Player player = pfw.Value.FirstOrDefault(play => play.Id == currentPlayerId);
+                                double pctSystem = -0.01;
+                                if (player != null)
                                 {
-                                    if (valueToUse >= i)
-                                        bar += "█";
+                                    if (playPos == PlayerPosition.G)
+                                        pctSystem = player.TOI;
                                     else
-                                        bar += "░";
+                                        pctSystem = player.PctSystem;
                                 }
 
-                                // Fill gap properly between number and bar
-                                int valueStringLenght = valueToUse.ToString().Length;
-                                string gap = string.Empty;
-                                for (int i = (4 - valueStringLenght); i > 0; i--)
-                                {
-                                    gap += " ";
-                                }
-
-                                // Show stats at right of player (not goalies)
-                                string stats = string.Empty;
-                                if (pos != PlayerPosition.G)
-                                {
-                                    stats = string.Format("[{0}|{1}|{2}|{3}|{4}|{5}|{6}]",
-                                        playerToWriteCSV.GP,
-                                        playerToWriteCSV.P,
-                                        playerToWriteCSV.PIM,
-                                        playerToWriteCSV.Hits,
-                                        playerToWriteCSV.BkS,
-                                        playerToWriteCSV.TkA,
-                                        playerToWriteCSV.SH);
-                                }
-
-                                sb.Append(string.Format("{0}{1} {2} {3}", gap, valueToUse, bar, stats));
-
-                                sb.AppendLine();
+                                playerStatForWeek.Add(pfw.Key, pctSystem);
                             }
 
-                            sw.WriteLine(sb.ToString());
+
+                            // 3- Get last 3 weeks stats average
+                            double ThreeWeekAvg = (playerStatForWeek[playerStatForWeek.Count] +
+                                playerStatForWeek[playerStatForWeek.Count - 1] +
+                                playerStatForWeek[playerStatForWeek.Count - 2]) / 3;
+
+                            double ThreeWeekStdVar = Math.Sqrt((Math.Pow(playerStatForWeek[playerStatForWeek.Count] - ThreeWeekAvg, 2) +
+                                Math.Pow(playerStatForWeek[playerStatForWeek.Count - 1] - ThreeWeekAvg, 2) +
+                                Math.Pow(playerStatForWeek[playerStatForWeek.Count - 2] - ThreeWeekAvg, 2)) / (3-1));
+
+                            double SixWeekAvg = (playerStatForWeek[playerStatForWeek.Count] +
+                                playerStatForWeek[playerStatForWeek.Count - 1] +
+                                playerStatForWeek[playerStatForWeek.Count - 2] +
+                                playerStatForWeek[playerStatForWeek.Count - 3] +
+                                playerStatForWeek[playerStatForWeek.Count - 4] +
+                                playerStatForWeek[playerStatForWeek.Count - 5]) / 6;
+
+                            double SixWeekStdVar = Math.Sqrt((Math.Pow(playerStatForWeek[playerStatForWeek.Count] - SixWeekAvg, 2) +
+                                Math.Pow(playerStatForWeek[playerStatForWeek.Count - 1] - SixWeekAvg, 2) +
+                                Math.Pow(playerStatForWeek[playerStatForWeek.Count - 2] - SixWeekAvg, 2) +
+                                Math.Pow(playerStatForWeek[playerStatForWeek.Count - 3] - SixWeekAvg, 2) +
+                                Math.Pow(playerStatForWeek[playerStatForWeek.Count - 4] - SixWeekAvg, 2) +
+                                Math.Pow(playerStatForWeek[playerStatForWeek.Count - 5] - SixWeekAvg, 2)) / (6 - 1));
+
+                            string displayedTitle = string.Format("{0}\nLast three weeks average: {1} std.var: {2}\nLast six weeks average: {3} std.var: {4}\n", currentPlayerName, (int)ThreeWeekAvg, (int)ThreeWeekStdVar, (int)SixWeekAvg, (int)SixWeekStdVar);
+
+
+                            // 4- Generate player graph
+                            string graph;
+                            if (playPos == PlayerPosition.G)
+                                graph = BarGraph.Generate(playerStatForWeek, displayedTitle, 1, playerStatForWeek.Count, 1, 0, 300, 30);
+                            else
+                                graph = BarGraph.Generate(playerStatForWeek, displayedTitle, 1, playerStatForWeek.Count, 1, 0, 100, 10);                            
+
+                            playSorting.Add(new Tuple<double, string>(ThreeWeekAvg, graph));
                         }
+
+                        // 5- Sort stat from best to worst
+                        List<Tuple<double, string>> orderedList = playSorting.OrderByDescending(playSort => playSort.Item1).ToList();
+
+                        foreach (Tuple<double, string> tp in orderedList)
+                        {
+                            sb.Append(tp.Item2);
+                        }
+
+                        sw.WriteLine(sb.ToString());
                     }
                 }
             }
             catch
             {
+
             }
         }
+
+            
 
 
         public void SaveReportData(NCHLTeam team, bool isWeekStats)
@@ -178,9 +279,9 @@ namespace NCHLStats
             {
                 string fileName;
                 if (isWeekStats)
-                    fileName = string.Format("Week{0}Report{1}.xml", CurrentWeek, team.ToString());
+                    fileName = string.Format("WeekReports\\Week{0}Report{1}.xml", CurrentWeek, team.ToString());
                 else
-                    fileName = string.Format("Quarter{0}Report{1}.xml", CurrentQuarter, team.ToString());
+                    fileName = string.Format("QuarterReports\\Quarter{0}Report{1}.xml", CurrentQuarter, team.ToString());
 
                 using (StreamWriter sw = new StreamWriter(fileName))
                 {
@@ -287,9 +388,9 @@ namespace NCHLStats
             {
                 string fileName;
                 if (isWeekStats)
-                    fileName = string.Format("Week{0}Stats.xml", CurrentWeek);
+                    fileName = string.Format("WeekStats\\Week{0}Stats.xml", CurrentWeek);
                 else
-                    fileName = string.Format("Quarter{0}Stats.xml", CurrentQuarter);
+                    fileName = string.Format("QuarterStats\\Quarter{0}Stats.xml", CurrentQuarter);
 
                 using (XmlWriter writer = XmlWriter.Create(fileName))
                 {
@@ -325,7 +426,7 @@ namespace NCHLStats
                     writer.WriteEndDocument();
                 }
 
-                using (StreamWriter jsonWriter = new StreamWriter(string.Format("Week{0}Stats.json", CurrentWeek)))
+                using (StreamWriter jsonWriter = new StreamWriter(string.Format("WeekStats\\Week{0}Stats.json", CurrentWeek)))
                 {
                     jsonWriter.Write(JsonConvert.SerializeObject(Players));
                 }

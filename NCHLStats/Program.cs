@@ -12,10 +12,10 @@ namespace NCHLStats
     {
         static void Main(string[] args)
         {
-            Dictionary<int, double> dict = new Dictionary<int, double>();
-            dict.Add(1, 95);
-            dict.Add(2, 65);
-            BarGraph bg = new BarGraph(dict, 1, 2, 1, 0, 100, 10);
+            //Dictionary<int, double> dict = new Dictionary<int, double>();
+            //dict.Add(1, 95);
+            //dict.Add(2, 65);
+            //BarGraph bg = new BarGraph(dict, 1, 2, 1, 0, 100, 10);
 
 
 
@@ -73,7 +73,17 @@ namespace NCHLStats
                 manager.SaveLeagueData(true);
 
                 if (manager.MasterMode)
+                {
                     manager.SaveReportData(NCHLTeam.SUN, true);
+
+                    foreach (NCHLTeam team in Enum.GetValues(typeof(NCHLTeam)))
+                    {
+                        if (team == NCHLTeam.AGL)
+                            continue;
+
+                        manager.SaveGraph(team);
+                    }
+                }
             }
             else if (modeNumber == 2)
             {
