@@ -74,13 +74,12 @@ namespace NCHLStats
 
                 if (manager.MasterMode)
                 {
-                    manager.SaveReportData(NCHLTeam.SUN, true);
-
                     foreach (NCHLTeam team in Enum.GetValues(typeof(NCHLTeam)))
                     {
                         if (team == NCHLTeam.AGL)
                             continue;
 
+                        manager.SaveReportData(team, true);
                         manager.SaveGraph(team);
                     }
                 }
