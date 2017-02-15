@@ -86,7 +86,7 @@ Gabriel Landeskog,RAM,L,8476455
 Derek Stepan,RAM,C,8474613
 Wayne Simmonds,RAM,R,8474190
 Jeff Skinner,RAM,L,8475784
-Patric Hornqvist,RAM,R,8471887
+Patric Hornqvist,BUC,R,8471887
 Mike Green,RAM,D,8471242
 Nathan Beaulieu,RAM,D,8476470
 Mark Scheifele,RAM,C,8476460
@@ -100,7 +100,7 @@ Corey Crawford,RAM,G,8470645
 Devan Dubnyk,RAM,G,8471227
 Anton Khudobin,RAM,G,8471418
 Ryan Miller,RAM,G,8468011
-Calvin Pickard,RAM,G,8475717
+Calvin Pickard,PAC,G,8475717
 David Krejci,REB,C,8471276
 Milan Lucic,REB,L,8473473
 Dmitry Kulikov,REB,D,8475179
@@ -167,7 +167,7 @@ Jimmy Howard,SUN,G,8470657
 Jonathan Quick,SUN,G,8471734
 Ben Scrivens,SUN,G,8475681
 Dan Ellis,SUN,G,8468540
-Ryan McDonagh,BUC,D,8474151
+Ryan McDonagh,RAM,D,8474151
 Frederik Andersen,SUN,G,8475883
 Carl Hagelin,BUC,L,8474176
 Christopher Nilstorp,PAC,G,8476846
@@ -228,7 +228,7 @@ Cam Talbot,REB,G,8475660
 John Gibson,RAM,G,8476434
 Ryan Strome,BUC,R,8476458
 Teuvo Teravainen,RAM,C,8476882
-Anders Lee,BUC,L,8475314
+Anders Lee,RAM,L,8475314
 Mark Stone,BUC,R,8475913
 Anthony Duclair,PAC,R,8477407
 Tyler Myers,RAM,D,8474574
@@ -291,7 +291,7 @@ Max Domi,PAC,L,8477503
 John Klingberg,RAM,D,8475906
 Artemi Panarin,REB,L,8478550
 Anton Slepyshev,BUC,L,8477415
-Scott Darling,PAC,G,8474152
+Scott Darling,RAM,G,8474152
 Andrew Hammond,RAM,G,8477202
 Matthew O'Connor,BUC,G,8478559
 Colton Parayko,SUN,D,8476892
