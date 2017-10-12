@@ -34,11 +34,12 @@ namespace NCHLStats
     public class JsonBio
     {
         public string id;
+        public string currentAge;
         public JsonCurrentTeam currentTeam;
     }
 
     public class JsonCurrentTeam
     {
-        public string triCode;
+        public string name;
     }
 }

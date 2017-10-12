@@ -403,6 +403,7 @@ namespace NCHLStats
 
                         writer.WriteElementString("Name", player.Name);
                         writer.WriteElementString("NCHLTeam", player.NCHLTeam.ToString());
+                        writer.WriteElementString("Age", player.Age.ToString());
                         writer.WriteElementString("NHLTeam", player.NHLTeam.ToString());
                         writer.WriteElementString("Pos", player.Pos.ToString());
                         writer.WriteElementString("GP", player.GP.ToString());
@@ -524,7 +525,7 @@ namespace NCHLStats
                         string htmlCode = client.DownloadString(bioJsonHTMLLink);
                         JsonBios jsonBiosPlayers = JsonConvert.DeserializeObject<JsonBios>(htmlCode);
                         //if (jsonBiosPlayers.people.First().currentTeam != null)
-                            //currentPlayer.NHLTeam = Utilities.GetNHLTeamFromString(jsonBiosPlayers.people.First().currentTeam.triCode);
+                        //    currentPlayer.NHLTeam = Utilities.GetNHLTeamFromString(jsonBiosPlayers.people.First().currentTeam.triCode);
                     }                                        
                 }
                 else
@@ -536,8 +537,20 @@ namespace NCHLStats
                         currentPlayer.Name = p.playerName;
                     if (p.playerPositionCode != null)
                         currentPlayer.Pos = Utilities.GetPlayerPositionFromString(p.playerPositionCode);
-                    if (p.teamAbbrev != null)
-                        currentPlayer.NHLTeam = Utilities.GetNHLTeamFromString(p.teamAbbrev);
+
+                    bool generateAgeAndTeam = false;
+                    if (generateAgeAndTeam)
+                    {
+                        using (WebClient client = new WebClient())
+                        {
+                            string bioJsonHTMLLink = string.Format("http://statsapi.web.nhl.com/api/v1/people/{0}", jsonPlayerId);
+                            string htmlCode = client.DownloadString(bioJsonHTMLLink);
+                            JsonBios jsonBiosPlayers = JsonConvert.DeserializeObject<JsonBios>(htmlCode);
+                            JsonBio jsonBioPlayer = jsonBiosPlayers.people.First();
+                            currentPlayer.Age = Convert.ToInt32(jsonBioPlayer.currentAge);
+                            currentPlayer.NHLTeam = jsonBioPlayer.currentTeam.name;
+                        }
+                    }
                 }
             }
         }

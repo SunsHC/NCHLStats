@@ -34,7 +34,7 @@ namespace NCHLStats
             string[] modeArray = mode.Split('.');
             int modeNumber = Convert.ToInt32(modeArray[0]);
             if (modeArray.Length > 1)
-                manager.MasterMode = modeArray[1] == "1992";
+                manager.MasterMode = modeArray[1] == "1984";
 
             if (modeNumber == 1)
             {

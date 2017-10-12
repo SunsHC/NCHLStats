@@ -30,7 +30,7 @@ Brian Elliott,RAM,G,8470880
 Marc-Andre Fleury,RAM,G,8470594
 Henrik Lundqvist,SUN,G,8468685
 Cam Ward,BUC,G,8470320
-Steven Stamkos,PAC,R,8474564
+Steven Stamkos,PAC,C,8474564
 Phil Kessel,PAC,R,8473548
 James Neal,PAC,R,8471707
 John Tavares,PAC,C,8475166
@@ -266,7 +266,6 @@ Andreas Athanasiou,RAM,R,8476960
 Jimmy Vesey,BUC,L,8476918
 Chris Bigras,SUN,D,8477453
 Mark Giordano,BUC,D,8470966
-Dougie Hamilton,BUC,D,8476462
 Travis Hamonic,BUC,D,8474612
 Evander Kane,BUC,L,8475169
 David Backes,REB,R,8470655
@@ -297,7 +296,7 @@ Matt Puempel,REB,L,8476477
 Curtis Lazar,REB,C,8477508
 Auston Matthews,REB,C,8479318
 Jesse Puljujarvi,REB,R,8479344
-Patrik Laine,RAM,L,8479339
+Patrik Laine,RAM,R,8479339
 Pierre-Luc Dubois,SUN,L,8479400
 Matthew Tkachuk,BUC,L,8479314
 Olli Juolevi,BUC,D,8479355
@@ -351,7 +350,7 @@ Steven Santini,SUN,D,8477463
 Conor Sheary,BUC,R,8477839
 Cal Petersen,PAC,G,8477361
 Drake Caggiula,BUC,C,8479465
-Jake Guentzel,SUN,R,8477404
+Jake Guentzel,SUN,L,8477404
 Alexander Radulov,BUC,R,8471228
 Zach Werenski,REB,D,8478460
 Lawson Crouse,BUC,L,8478474
@@ -402,7 +401,7 @@ Slater Koekkoek,REB,D,8476886
 Oliver Kylington,REB,D,8478430
 Roland McKeown,REB,D,8477981
 Samuel Morin,SUN,D,8477502
-Joshua Morrissey,RAM,D,8477504
+Josh Morrissey,RAM,D,8477504
 Xavier Ouellet,REB,D,8476443
 Ryan Pulock,REB,D,8477506
 Jeremy Roy,RAM,D,8478464
@@ -414,7 +413,7 @@ Jakub Zboril,BUC,D,8478415
 Nico Hischier,SUN,C,8480002
 Nolan Patrick,REB,C,8479974
 Justin Schultz,BUC,D,8474602
-Evgenii Dadonov,BUC,R,8474149
+Evgeny Dadonov,BUC,R,8474149
 Vadim Shipachyov,SUN,C,8479650
 Zach Hyman,BUC,C,8475786
 Alexander Kerfoot,RAM,C,8477021
@@ -429,7 +428,7 @@ Sam Steel,PAC,C,8479351
 Brett Pesce,SUN,D,8477488
 Kevin Labanc,REB,R,8478099
 Mike Condon,REB,G,8477237
-Jakob Forsbacka-Karlsson,SUN,C,8478417
+Jakob Forsbacka Karlsson,SUN,C,8478417
 Spencer Foo,BUC,C,8480330
 Ian McCoshen,SUN,D,8477452
 Aaron Dell,PAC,G,8477180
@@ -440,7 +439,7 @@ Tomas Hyka,SUN,R,8476617
 Christian Fischer,REB,R,8478432
 Daniel O'Regan,REB,C,8476982
 Mattias Janmark,PAC,L,8477406
-Zach Aston-Reese,PAC,L,8479944
+Zachary Aston-Reese,PAC,L,8479944
 Victor Mete,BUC,D,8479376
 Gabriel Carlsson,SUN,D,8478506
 Filip Chytil,RAM,C,8480078
