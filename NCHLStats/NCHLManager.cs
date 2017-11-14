@@ -17,7 +17,6 @@ namespace NCHLStats
         public List<Player> Players { get; protected set; }
         public bool MasterMode { get; set; }
         public int CurrentWeek { get; set; }
-        public int CurrentQuarter { get; set; }
 
         internal StatsManager()
         {
@@ -281,7 +280,7 @@ namespace NCHLStats
                 if (isWeekStats)
                     fileName = string.Format("WeekReports\\Week{0}Report{1}.xml", CurrentWeek, team.ToString());
                 else
-                    fileName = string.Format("QuarterReports\\Quarter{0}Report{1}.xml", CurrentQuarter, team.ToString());
+                    fileName = string.Format("SeasonReports\\SeasonReport{0}.xml", team.ToString());
 
                 using (StreamWriter sw = new StreamWriter(fileName))
                 {
@@ -390,7 +389,7 @@ namespace NCHLStats
                 if (isWeekStats)
                     fileName = string.Format("WeekStats\\Week{0}Stats.xml", CurrentWeek);
                 else
-                    fileName = string.Format("QuarterStats\\Quarter{0}Stats.xml", CurrentQuarter);
+                    fileName = "SeasonStats\\SeasonStats.xml";
 
                 using (XmlWriter writer = XmlWriter.Create(fileName))
                 {
@@ -403,7 +402,6 @@ namespace NCHLStats
 
                         writer.WriteElementString("Name", player.Name);
                         writer.WriteElementString("NCHLTeam", player.NCHLTeam.ToString());
-                        writer.WriteElementString("Age", player.Age.ToString());
                         writer.WriteElementString("NHLTeam", player.NHLTeam.ToString());
                         writer.WriteElementString("Pos", player.Pos.ToString());
                         writer.WriteElementString("GP", player.GP.ToString());
@@ -445,16 +443,16 @@ namespace NCHLStats
 
         internal void RetrieveWebData(DateTime startDate, DateTime endDate)
         {
-            string scoringJsonHTMLLink = string.Format("http://www.nhl.com/stats/rest/individual/skaters/basic/game/skatersummary?cayenneExp=gameDate%3E=%22{0}-{1}-{2}T05:00:00.000Z%22%20and%20gameDate%3C=%22{3}-{4}-{5}T05:00:00.000Z%22%20and%20gameTypeId=2",
+            string scoringJsonHTMLLink = string.Format("http://www.nhl.com/stats/rest/skaters?isAggregate=true&reportType=basic&isGame=true&reportName=skatersummary&sort=[{{%22property%22:%22points%22,%22direction%22:%22DESC%22}},{{%22property%22:%22goals%22,%22direction%22:%22DESC%22}},{{%22property%22:%22assists%22,%22direction%22:%22DESC%22}}]&cayenneExp=gameDate%3E=%22{0}-{1}-{2}%22%20and%20gameDate%3C=%22{3}-{4}-{5}%22%20and%20gameTypeId=2",
                 startDate.Year, startDate.Month, startDate.Day, endDate.Year, endDate.Month, endDate.Day);
 
-            string defensiveJsonHTMLLink = string.Format("http://www.nhl.com/stats/rest/individual/skaters/basic/game/realtime?cayenneExp=gameDate%3E=%22{0}-{1}-{2}T05:00:00.000Z%22%20and%20gameDate%3C=%22{3}-{4}-{5}T05:00:00.000Z%22%20and%20gameTypeId=2",
+            string defensiveJsonHTMLLink = string.Format("http://www.nhl.com/stats/rest/skaters?isAggregate=true&reportType=basic&isGame=true&reportName=realtime&sort=[{{%22property%22:%22hits%22,%22direction%22:%22DESC%22}}]&cayenneExp=gameDate%3E=%22{0}-{1}-{2}%22%20and%20gameDate%3C=%22{3}-{4}-{5}%22%20and%20gameTypeId=2",
                 startDate.Year, startDate.Month, startDate.Day, endDate.Year, endDate.Month, endDate.Day);
 
-            string timeOnIceJsonHTMLLink = string.Format("http://www.nhl.com/stats/rest/individual/skaters/basic/game/timeonice?cayenneExp=gameDate%3E=%22{0}-{1}-{2}T05:00:00.000Z%22%20and%20gameDate%3C=%22{3}-{4}-{5}T05:00:00.000Z%22%20and%20gameTypeId=2",
+            string timeOnIceJsonHTMLLink = string.Format("http://www.nhl.com/stats/rest/skaters?isAggregate=true&reportType=basic&isGame=true&reportName=timeonice&sort=[{{%22property%22:%22timeOnIce%22,%22direction%22:%22DESC%22}}]&cayenneExp=gameDate%3E=%22{0}-{1}-{2}%22%20and%20gameDate%3C=%22{3}-{4}-{5}%22%20and%20gameTypeId=2",
                 startDate.Year, startDate.Month, startDate.Day, endDate.Year, endDate.Month, endDate.Day);
 
-            string goalieJsonHTMLLink = string.Format("http://www.nhl.com/stats/rest/individual/goalies/goalie_basic/game/goaliesummary?cayenneExp=gameDate%3E=%22{0}-{1}-{2}T05:00:00.000Z%22%20and%20gameDate%3C=%22{3}-{4}-{5}T05:00:00.000Z%22%20and%20gameTypeId=2%20and%20playerPositionCode=%22G%22",
+            string goalieJsonHTMLLink = string.Format("http://www.nhl.com/stats/rest/goalies?isAggregate=true&reportType=goalie_basic&isGame=true&reportName=goaliesummary&sort=[{{%22property%22:%22wins%22,%22direction%22:%22DESC%22}}]&cayenneExp=gameDate%3E=%22{0}-{1}-{2}%22%20and%20gameDate%3C=%22{3}-{4}-{5}%22%20and%20gameTypeId=2",
                 startDate.Year, startDate.Month, startDate.Day, endDate.Year, endDate.Month, endDate.Day);
 
             Console.ForegroundColor = ConsoleColor.DarkCyan;
@@ -521,9 +519,9 @@ namespace NCHLStats
 
                     using (WebClient client = new WebClient())
                     {                        
-                        string bioJsonHTMLLink = string.Format("http://statsapi.web.nhl.com/api/v1/people/{0}", jsonPlayerId);
-                        string htmlCode = client.DownloadString(bioJsonHTMLLink);
-                        JsonBios jsonBiosPlayers = JsonConvert.DeserializeObject<JsonBios>(htmlCode);
+                        //string bioJsonHTMLLink = string.Format("http://statsapi.web.nhl.com/api/v1/people/{0}", jsonPlayerId);
+                        //string htmlCode = client.DownloadString(bioJsonHTMLLink);
+                        //JsonBios jsonBiosPlayers = JsonConvert.DeserializeObject<JsonBios>(htmlCode);
                         //if (jsonBiosPlayers.people.First().currentTeam != null)
                         //    currentPlayer.NHLTeam = Utilities.GetNHLTeamFromString(jsonBiosPlayers.people.First().currentTeam.triCode);
                     }                                        
@@ -537,20 +535,6 @@ namespace NCHLStats
                         currentPlayer.Name = p.playerName;
                     if (p.playerPositionCode != null)
                         currentPlayer.Pos = Utilities.GetPlayerPositionFromString(p.playerPositionCode);
-
-                    bool generateAgeAndTeam = false;
-                    if (generateAgeAndTeam)
-                    {
-                        using (WebClient client = new WebClient())
-                        {
-                            string bioJsonHTMLLink = string.Format("http://statsapi.web.nhl.com/api/v1/people/{0}", jsonPlayerId);
-                            string htmlCode = client.DownloadString(bioJsonHTMLLink);
-                            JsonBios jsonBiosPlayers = JsonConvert.DeserializeObject<JsonBios>(htmlCode);
-                            JsonBio jsonBioPlayer = jsonBiosPlayers.people.First();
-                            currentPlayer.Age = Convert.ToInt32(jsonBioPlayer.currentAge);
-                            currentPlayer.NHLTeam = jsonBioPlayer.currentTeam.name;
-                        }
-                    }
                 }
             }
         }
