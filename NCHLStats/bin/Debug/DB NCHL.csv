@@ -195,7 +195,7 @@ Anthony Duclair,PAC,R,8477407
 Darcy Kuemper,RAM,G,8475311
 Sam Reinhart,BUC,R,8477933
 Alexander Wennberg,SUN,C,8477505
-Andre Burakovsky,PAC,L,8477444
+Andre Burakovsky,PAC,R,8477444
 Leon Draisaitl,SUN,R,8477934
 Tanner Pearson,RAM,L,8476871
 Damon Severson,SUN,D,8476923
@@ -301,7 +301,7 @@ Pierre-Luc Dubois,SUN,L,8479400
 Matthew Tkachuk,BUC,L,8479314
 Olli Juolevi,BUC,D,8479355
 Alexander Nylander,PAC,L,8479423
-Clayton Keller,REB,C,8479343
+Clayton Keller,REB,R,8479343
 Logan Brown,RAM,C,8479366
 Mikhail Sergachev,SUN,D,8479410
 Jakob Chychrun,REB,D,8479345
@@ -317,7 +317,7 @@ Jake Bean,SUN,D,8479402
 Michael McLeod,REB,C,8479415
 Riley Tufte,PAC,L,8479362
 Alex DeBrincat,RAM,R,8479337
-Luke Kunin,SUN,C,8479316
+Luke Kunin,SUN,R,8479316
 Tyler Benson,REB,L,8479347
 Yegor Korshkov,PAC,R,8479510
 Henrik Borgstrom,BUC,C,8479404
@@ -328,7 +328,7 @@ Zdeno Chara,BUC,D,8465009
 Patrick Marleau,PAC,L,8466139
 Louis Domingue,BUC,G,8475839
 Nikita Zaitsev,BUC,D,8479458
-Christian Dvorak,RAM,L,8477989
+Christian Dvorak,RAM,C,8477989
 Igor Shesterkin,PAC,G,8478048
 Sebastian Aho,BUC,L,8478427
 Jaccob Slavin,PAC,D,8476958
@@ -422,7 +422,7 @@ Sven Andrighetto,BUC,L,8477413
 Brandon Montour,BUC,D,8477986
 Tage Thompson,SUN,C,8479420
 Will Butcher,BUC,D,8477355
-Anders Bjork,RAM,L,8478075
+Anders Bjork,RAM,R,8478075
 Jared Spurgeon,PAC,D,8474716
 Sam Steel,PAC,C,8479351
 Brett Pesce,SUN,D,8477488
