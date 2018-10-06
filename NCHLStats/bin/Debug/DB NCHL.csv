@@ -107,7 +107,7 @@ Nicklas Backstrom,SUN,C,8473563
 Brent Burns,SUN,D,8470613
 Jeff Carter,SUN,C,8470604
 Cam Fowler,SUN,D,8475764
-James van Riemsdyk,SUN,L,8474037
+James van Riemsdyk,BUC,L,8474037
 Victor Hedman,RAM,D,8475167
 T.J. Brodie,SUN,D,8474673
 Nino Niederreiter,SUN,L,8475799
@@ -156,7 +156,7 @@ Cam Talbot,BUC,G,8475660
 John Gibson,RAM,G,8476434
 Teuvo Teravainen,RAM,R,8476882
 Anders Lee,RAM,L,8475314
-Mark Stone,BUC,R,8475913
+Mark Stone,PAC,R,8475913
 Anthony Duclair,PAC,R,8477407
 Darcy Kuemper,BUC,G,8475311
 Sam Reinhart,BUC,R,8477933
@@ -482,10 +482,3 @@ Linus Olund,SUN,C,8480234
 Colton Point,REB,G,8479589
 Pavel Francouz,PAC,G,8480925
 Nikita Gusev,BUC,L,8477038
-
-
-
-
-
-
-
