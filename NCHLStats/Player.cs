@@ -13,7 +13,6 @@ namespace NCHLStats
         public PlayerPosition Pos { get; set; }
         public NCHLTeam NCHLTeam { get; set; }
         public NHLTeam NHLTeam { get; set; }
-        //public string NHLTeam { get; set; }
         public int Age { get; set; }
         public int GP { get; set; }
         public int P { get; set; }
@@ -23,6 +22,7 @@ namespace NCHLStats
         public int TkA { get; set; }
         public int BkS { get; set; }
         public int TOI { get; set; }
+        public int TOIPG { get; set; }
 
         public double PtsSystem { get; set; }
         public double PctSystem { get; set; }

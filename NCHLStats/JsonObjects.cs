@@ -24,6 +24,7 @@ namespace NCHLStats
         public string takeaways;
         public string shTimeOnIce;
         public string timeOnIce;
+        public string timeOnIcePerGame;
     }
 
     public class JsonBios

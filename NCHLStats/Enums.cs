@@ -15,7 +15,8 @@ namespace NCHLStats
         Hits = 16,
         TkA = 32,
         BkS = 64,
-        TOI = 128
+        TOI = 128,
+        TOIPG = 256
     }
 
     public enum PlayerPosition
