@@ -24,7 +24,7 @@ namespace NCHLStats
             // Stats de la semaine
             StatsManager manager = new StatsManager();
             manager.MasterMode = true;
-            
+
             Console.Write("Semaine (1-27): ");
             int week = Convert.ToInt32(Console.ReadLine());
             manager.CurrentWeek = week;

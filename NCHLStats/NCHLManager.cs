@@ -205,9 +205,13 @@ namespace NCHLStats
 
                         List<Player> players;
                         if (pos != PlayerPosition.G)
+                        {
                             players = Players.Where(p => p.NCHLTeam == team && p.Pos == pos).OrderBy(pl => pl.PctSystem).Reverse().ToList();
+                        }
                         else
+                        {
                             players = Players.Where(p => p.NCHLTeam == team && p.Pos == pos).OrderBy(pl => pl.TOI).Reverse().ToList();
+                        }
 
                         // Write Position
                         sb.AppendLine($"{pos}");
@@ -327,7 +331,7 @@ namespace NCHLStats
                             writer.WriteElementString("PctSystem", player.PctSystem.ToString());
                         }
 
-                        writer.WriteEndElement();
+                        writer.WriteEndElement();                        
                     }
                     writer.WriteEndElement();
 
@@ -426,14 +430,14 @@ namespace NCHLStats
                 {
                     currentPlayer = Players.Where(r => r.Id == jsonPlayerId).First();
 
-                    using (WebClient client = new WebClient())
-                    {                        
-                        //string bioJsonHTMLLink = string.Format("http://statsapi.web.nhl.com/api/v1/people/{0}", jsonPlayerId);
-                        //string htmlCode = client.DownloadString(bioJsonHTMLLink);
-                        //JsonBios jsonBiosPlayers = JsonConvert.DeserializeObject<JsonBios>(htmlCode);
-                        //if (jsonBiosPlayers.people.First().currentTeam != null)
-                        //    currentPlayer.NHLTeam = Utilities.GetNHLTeamFromString(jsonBiosPlayers.people.First().currentTeam.triCode);
-                    }                                        
+                    //using (WebClient client = new WebClient())
+                    //{                        
+                    //    //string bioJsonHTMLLink = string.Format("http://statsapi.web.nhl.com/api/v1/people/{0}", jsonPlayerId);
+                    //    //string htmlCode = client.DownloadString(bioJsonHTMLLink);
+                    //    //JsonBios jsonBiosPlayers = JsonConvert.DeserializeObject<JsonBios>(htmlCode);
+                    //    //if (jsonBiosPlayers.people.First().currentTeam != null)
+                    //    //    currentPlayer.NHLTeam = Utilities.GetNHLTeamFromString(jsonBiosPlayers.people.First().currentTeam.triCode);
+                    //}                                        
                 }
                 else
                 {
