@@ -74,10 +74,12 @@ namespace NCHLStats
 
             // Stats de saison
 
-            Console.ForegroundColor = ConsoleColor.Gray;
-            Console.WriteLine();
-            Console.WriteLine("Generer aussi les stats de la saison? (y/n)");
-            string mode = Console.ReadLine();
+            //Console.ForegroundColor = ConsoleColor.Gray;
+            //Console.WriteLine();
+            //Console.WriteLine("Generer aussi les stats de la saison? (y/n)");
+            //string mode = Console.ReadLine();
+
+            string mode = "y";
             if (mode == "y")
             {
                 manager = new StatsManager();

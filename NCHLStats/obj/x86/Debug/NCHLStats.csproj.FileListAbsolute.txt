@@ -40,3 +40,4 @@ E:\DOCS\prog\NCHLStats\NCHLStats\NCHLStats\bin\Debug\Newtonsoft.Json.xml
 E:\DOCS\prog\NCHLStats\NCHLStats\NCHLStats\obj\x86\Debug\NCHLStats.csprojResolveAssemblyReference.cache
 E:\DOCS\prog\NCHLStats\NCHLStats\NCHLStats\obj\x86\Debug\NCHLStats.csproj.CoreCompileInputs.cache
 E:\DOCS\prog\NCHLStats\NCHLStats\NCHLStats\obj\x86\Debug\NCHLStats.csproj.CopyComplete
+E:\DOCS\prog\NCHLStats\NCHLStats\NCHLStats\bin\Debug\NCHLStats.exe.config

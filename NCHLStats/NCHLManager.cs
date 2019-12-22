@@ -7,6 +7,7 @@ using System.Xml;
 using System.Collections.ObjectModel;
 using System.Net;
 using Newtonsoft.Json;
+using System.Threading;
 
 namespace NCHLStats
 {
@@ -356,17 +357,25 @@ namespace NCHLStats
 
         internal void RetrieveWebData(DateTime startDate, DateTime endDate)
         {
-            string scoringJsonHTMLLink = string.Format("http://www.nhl.com/stats/rest/skaters?isAggregate=true&reportType=basic&isGame=true&reportName=skatersummary&sort=[{{%22property%22:%22points%22,%22direction%22:%22DESC%22}},{{%22property%22:%22goals%22,%22direction%22:%22DESC%22}},{{%22property%22:%22assists%22,%22direction%22:%22DESC%22}}]&cayenneExp=gameDate%3E=%22{0}-{1}-{2}%22%20and%20gameDate%3C=%22{3}-{4}-{5}%22%20and%20gameTypeId=2",
-                startDate.Year, startDate.Month, startDate.Day, endDate.Year, endDate.Month, endDate.Day);
+            string GetScoringJsonHTMLLink(int startCount)
+            {
+                return $"https://api.nhle.com/stats/rest/en/skater/summary?isAggregate=true&isGame=true&sort=[{{%22property%22:%22points%22,%22direction%22:%22DESC%22}},{{%22property%22:%22goals%22,%22direction%22:%22DESC%22}},{{%22property%22:%22assists%22,%22direction%22:%22DESC%22}}]&start={startCount}&limit=100&factCayenneExp=gamesPlayed>=1&cayenneExp=gameDate<%22{endDate.Year}-{endDate.Month}-{endDate.Day}%2023%3A59%3A59%22%20and%20gameDate>=%22{startDate.Year}-{startDate.Month}-{startDate.Day}%22%20and%20gameTypeId=2";
+            }
 
-            string defensiveJsonHTMLLink = string.Format("http://www.nhl.com/stats/rest/skaters?isAggregate=true&reportType=basic&isGame=true&reportName=realtime&sort=[{{%22property%22:%22hits%22,%22direction%22:%22DESC%22}}]&cayenneExp=gameDate%3E=%22{0}-{1}-{2}%22%20and%20gameDate%3C=%22{3}-{4}-{5}%22%20and%20gameTypeId=2",
-                startDate.Year, startDate.Month, startDate.Day, endDate.Year, endDate.Month, endDate.Day);
+            string GetDefensiveJsonHTMLLink(int startCount)
+            {
+                return $"https://api.nhle.com/stats/rest/en/skater/realtime?isAggregate=true&isGame=true&sort=[{{%22property%22:%22hits%22,%22direction%22:%22DESC%22}}]&start={startCount}&limit=100&factCayenneExp=gamesPlayed>=1&cayenneExp=gameDate<%22{endDate.Year}-{endDate.Month}-{endDate.Day}%2023%3A59%3A59%22%20and%20gameDate>=%22{startDate.Year}-{startDate.Month}-{startDate.Day}%22%20and%20gameTypeId=2";
+            }
 
-            string timeOnIceJsonHTMLLink = string.Format("http://www.nhl.com/stats/rest/skaters?isAggregate=true&reportType=basic&isGame=true&reportName=timeonice&sort=[{{%22property%22:%22timeOnIce%22,%22direction%22:%22DESC%22}}]&cayenneExp=gameDate%3E=%22{0}-{1}-{2}%22%20and%20gameDate%3C=%22{3}-{4}-{5}%22%20and%20gameTypeId=2",
-                startDate.Year, startDate.Month, startDate.Day, endDate.Year, endDate.Month, endDate.Day);
+            string GetTimeOnIceJsonHTMLLink(int startCount)
+            {
+                return $"https://api.nhle.com/stats/rest/en/skater/timeonice?isAggregate=true&isGame=true&sort=[{{%22property%22:%22timeOnIce%22,%22direction%22:%22DESC%22}}]&start={startCount}&limit=100&factCayenneExp=gamesPlayed>=1&cayenneExp=gameDate<%22{endDate.Year}-{endDate.Month}-{endDate.Day}%2023%3A59%3A59%22%20and%20gameDate>=%22{startDate.Year}-{startDate.Month}-{startDate.Day}%22%20and%20gameTypeId=2";
+            }
 
-            string goalieJsonHTMLLink = string.Format("http://www.nhl.com/stats/rest/goalies?isAggregate=true&reportType=goalie_basic&isGame=true&reportName=goaliesummary&sort=[{{%22property%22:%22wins%22,%22direction%22:%22DESC%22}}]&cayenneExp=gameDate%3E=%22{0}-{1}-{2}%22%20and%20gameDate%3C=%22{3}-{4}-{5}%22%20and%20gameTypeId=2",
-                startDate.Year, startDate.Month, startDate.Day, endDate.Year, endDate.Month, endDate.Day);
+            string GetGoalieJsonHTMLLink(int startCount)
+            {
+                return $"https://api.nhle.com/stats/rest/en/goalie/summary?isAggregate=true&isGame=true&sort=[{{%22property%22:%22wins%22,%22direction%22:%22DESC%22}},{{%22property%22:%22savePct%22,%22direction%22:%22DESC%22}}]&start={startCount}&limit=100&factCayenneExp=gamesPlayed>=1&cayenneExp=gameDate<%22{endDate.Year}-{endDate.Month}-{endDate.Day}%2023%3A59%3A59%22%20and%20gameDate>=%22{startDate.Year}-{startDate.Month}-{startDate.Day}%22%20and%20gameTypeId=2";
+            }
 
             Console.ForegroundColor = ConsoleColor.DarkCyan;
             Console.WriteLine(string.Format("Obtention des données du {0} inclusivement au {1} exclusivement en cours...", startDate.ToShortDateString(), endDate.ToShortDateString()));
@@ -374,53 +383,125 @@ namespace NCHLStats
             Progresser retreiverProgress = new Progresser(14);
             using (WebClient client = new WebClient())
             {
-                string htmlCode = client.DownloadString(scoringJsonHTMLLink);
-                retreiverProgress.Update();
+                ServicePointManager.Expect100Continue = true;
+                ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
 
-                JsonPlayers jsonScoringPlayers = JsonConvert.DeserializeObject<JsonPlayers>(htmlCode);
-                retreiverProgress.Update();
+                string htmlCode;
+                int count = 0;
 
-                // Create player list before setting their stats value
-                CreatePlayersListFromJsonList(jsonScoringPlayers.data as List<JsonPlayer>);
+                // Scoring stats
+                List<JsonPlayer> scoringPlayersList = new List<JsonPlayer>();
                 retreiverProgress.Update();
+                while (true)
+                {
+                    string scoringJsonHTMLLink = GetScoringJsonHTMLLink(count);
+                    Thread.Sleep(100);
+                    htmlCode = client.DownloadString(scoringJsonHTMLLink);                    
+                    
+                    JsonPlayers jsonScoringPlayers = JsonConvert.DeserializeObject<JsonPlayers>(htmlCode);
 
-                UpdatePlayersStatisticsFromJsonList(jsonScoringPlayers.data as List<JsonPlayer>, (StatsType.GP | StatsType.P | StatsType.PIM | StatsType.TOIPG));
-                retreiverProgress.Update();
-
-                htmlCode = client.DownloadString(defensiveJsonHTMLLink);
-                retreiverProgress.Update();
-
-                JsonPlayers jsonDefensivePlayers = JsonConvert.DeserializeObject<JsonPlayers>(htmlCode);
-                retreiverProgress.Update();
-
-                UpdatePlayersStatisticsFromJsonList(jsonDefensivePlayers.data as List<JsonPlayer>, (StatsType.Hits | StatsType.BkS | StatsType.TkA));
-                retreiverProgress.Update();
-
-                htmlCode = client.DownloadString(timeOnIceJsonHTMLLink);
-                retreiverProgress.Update();
-
-                JsonPlayers jsonTimeOnIcePlayers = JsonConvert.DeserializeObject<JsonPlayers>(htmlCode);
-                retreiverProgress.Update();
-
-                UpdatePlayersStatisticsFromJsonList(jsonTimeOnIcePlayers.data as List<JsonPlayer>, (StatsType.SH | StatsType.TOI));
-                retreiverProgress.Update();
-
-                htmlCode = client.DownloadString(goalieJsonHTMLLink);
-                retreiverProgress.Update();
-
-                JsonPlayers jsonGoaliesPlayers = JsonConvert.DeserializeObject<JsonPlayers>(htmlCode);
+                    if (jsonScoringPlayers.data.Count > 0)
+                    {
+                        scoringPlayersList.AddRange(jsonScoringPlayers.data);
+                        count += 100;
+                    }
+                    else
+                        break;
+                }
                 retreiverProgress.Update();
 
                 // Create player list before setting their stats value
-                CreatePlayersListFromJsonList(jsonGoaliesPlayers.data as List<JsonPlayer>);
+                CreatePlayersListFromJsonList(scoringPlayersList);
                 retreiverProgress.Update();
 
-                UpdatePlayersStatisticsFromJsonList(jsonGoaliesPlayers.data as List<JsonPlayer>, (StatsType.TOI));
+                UpdatePlayersStatisticsFromJsonList(scoringPlayersList, (StatsType.GP | StatsType.P | StatsType.PIM | StatsType.TOIPG));
+                retreiverProgress.Update();
+
+
+                // Defensive stats
+                count = 0;
+                List<JsonPlayer> defensivePlayersList = new List<JsonPlayer>();
+                retreiverProgress.Update();
+                while (true)
+                {
+                    string defensiveJsonHTMLLink = GetDefensiveJsonHTMLLink(count);
+                    Thread.Sleep(100);
+                    htmlCode = client.DownloadString(defensiveJsonHTMLLink);
+
+                    JsonPlayers jsonDefensivePlayers = JsonConvert.DeserializeObject<JsonPlayers>(htmlCode);
+
+                    if (jsonDefensivePlayers.data.Count > 0)
+                    {
+                        defensivePlayersList.AddRange(jsonDefensivePlayers.data);
+                        count += 100;
+                    }
+                    else
+                        break;
+                }
+                retreiverProgress.Update();
+
+                UpdatePlayersStatisticsFromJsonList(defensivePlayersList, (StatsType.Hits | StatsType.BkS | StatsType.TkA));
+                retreiverProgress.Update();
+
+
+                // Time on Ice stats
+                count = 0;
+                List<JsonPlayer> timeOnIcePlayersList = new List<JsonPlayer>();
+                retreiverProgress.Update();
+                while (true)
+                {
+                    string timeOnIceJsonHTMLLink = GetTimeOnIceJsonHTMLLink(count);
+                    Thread.Sleep(100);
+                    htmlCode = client.DownloadString(timeOnIceJsonHTMLLink);
+
+                    JsonPlayers jsonTimeOnIcePlayers = JsonConvert.DeserializeObject<JsonPlayers>(htmlCode);
+
+                    if (jsonTimeOnIcePlayers.data.Count > 0)
+                    {
+                        timeOnIcePlayersList.AddRange(jsonTimeOnIcePlayers.data);
+                        count += 100;
+                    }
+                    else
+                        break;
+                }
+                retreiverProgress.Update();
+
+                UpdatePlayersStatisticsFromJsonList(timeOnIcePlayersList, (StatsType.SH | StatsType.TOI));
+                retreiverProgress.Update();
+
+
+                // Goalie stats
+                count = 0;
+                List<JsonPlayer> goaliesPlayersList = new List<JsonPlayer>();
+                retreiverProgress.Update();
+                while (true)
+                {
+                    string goaliesJsonHTMLLink = GetGoalieJsonHTMLLink(count);
+                    Thread.Sleep(100);
+                    htmlCode = client.DownloadString(goaliesJsonHTMLLink);
+
+                    JsonPlayers jsonGoaliesPlayers = JsonConvert.DeserializeObject<JsonPlayers>(htmlCode);
+
+                    if (jsonGoaliesPlayers.data.Count > 0)
+                    {
+                        goaliesPlayersList.AddRange(jsonGoaliesPlayers.data);
+                        count += 100;
+                    }
+                    else
+                        break;
+                }
+                retreiverProgress.Update();
+
+                // Create player list before setting their stats value
+                CreatePlayersListFromJsonList(goaliesPlayersList, isGoalie : true);
+                retreiverProgress.Update();
+
+                UpdatePlayersStatisticsFromJsonList(goaliesPlayersList, (StatsType.TOI));
                 retreiverProgress.Update();
             }
         }
 
-        private void CreatePlayersListFromJsonList(List<JsonPlayer> jsonPlayers)
+        private void CreatePlayersListFromJsonList(List<JsonPlayer> jsonPlayers, bool isGoalie = false)
         {
             foreach (JsonPlayer p in jsonPlayers)
             {
@@ -444,10 +525,10 @@ namespace NCHLStats
                     currentPlayer = new Player(jsonPlayerId);
                     Players.Add(currentPlayer);
 
-                    if (p.playerName != null)
-                        currentPlayer.Name = p.playerName;
-                    if (p.playerPositionCode != null)
-                        currentPlayer.Pos = Utilities.GetPlayerPositionFromString(p.playerPositionCode);
+                    if (p.skaterFullName != null || p.goalieFullName != null)
+                        currentPlayer.Name = isGoalie ? p.goalieFullName : p.skaterFullName;
+                    if (p.positionCode != null)
+                        currentPlayer.Pos = Utilities.GetPlayerPositionFromString(p.positionCode);
                 }
             }
         }

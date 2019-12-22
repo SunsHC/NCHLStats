@@ -8,6 +8,7 @@ namespace NCHLStats
     public class JsonPlayers
     {
         public List<JsonPlayer> data;
+        public int total;
     }
 
     public class JsonPlayer
@@ -15,8 +16,9 @@ namespace NCHLStats
         public string playerId;
         public string teamAbbrev;
         public string points;
-        public string playerName;
-        public string playerPositionCode;
+        public string skaterFullName;
+        public string goalieFullName;
+        public string positionCode;
         public string penaltyMinutes;
         public string gamesPlayed;
         public string blockedShots;
