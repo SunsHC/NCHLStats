@@ -12,7 +12,6 @@ namespace NCHLStats
         public int Id { get; set; }
         public PlayerPosition Pos { get; set; }
         public NCHLTeam NCHLTeam { get; set; }
-        public NHLTeam NHLTeam { get; set; }
         public bool IsInFantasyTeam { get; set; }
         public PlayerPosition FantasyTeamPos { get; set; }
         public int Age { get; set; }

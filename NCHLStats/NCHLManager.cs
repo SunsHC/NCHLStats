@@ -48,10 +48,10 @@ namespace NCHLStats
         {
             for (int i = 1; i <= 27; i++)
             {
-                if (!File.Exists($"WeekStats\\Week{i}Stats.json"))
+                if (!File.Exists($"Semaines\\Semaine{i}.json"))
                     break;
 
-                using (StreamReader jsonReader = new StreamReader($"WeekStats\\Week{i}Stats.json"))
+                using (StreamReader jsonReader = new StreamReader($"Semaines\\Semaine{i}.json"))
                 {
                     string s = jsonReader.ReadLine();
                     var weekPlayers = JsonConvert.DeserializeObject(s, typeof(List<Player>)) as List<Player>;
@@ -300,9 +300,9 @@ namespace NCHLStats
             {
                 string fileName;
                 if (isWeekStats)
-                    fileName = $"WeekStats\\Week{CurrentWeek}Stats.xml";
+                    fileName = $"Semaines\\Semaine{CurrentWeek}.xml";
                 else
-                    fileName = "SeasonStats\\SeasonStats.xml";
+                    fileName = "Saison\\Saison.xml";
 
                 using (XmlWriter writer = XmlWriter.Create(fileName))
                 {
@@ -315,7 +315,6 @@ namespace NCHLStats
 
                         writer.WriteElementString("Name", player.Name);
                         writer.WriteElementString("NCHLTeam", player.NCHLTeam.ToString());
-                        writer.WriteElementString("NHLTeam", player.NHLTeam.ToString());
                         writer.WriteElementString("Pos", player.Pos.ToString());
                         writer.WriteElementString("GP", player.GP.ToString());
                         writer.WriteElementString("P", player.P.ToString());
@@ -339,16 +338,15 @@ namespace NCHLStats
                     writer.WriteEndDocument();
                 }
 
-                using (StreamWriter jsonWriter = new StreamWriter($"WeekStats\\Week{CurrentWeek}Stats.json"))
+                if (isWeekStats)
                 {
-                    jsonWriter.Write(JsonConvert.SerializeObject(Players));
+                    using (StreamWriter jsonWriter = new StreamWriter($"Semaines\\Semaine{CurrentWeek}.json"))
+                    {
+                        jsonWriter.Write(JsonConvert.SerializeObject(Players));
+                    }
                 }
 
                 LoadJSONs();
-
-
-
-
             }
             catch
             {
@@ -509,16 +507,7 @@ namespace NCHLStats
                 Player currentPlayer;
                 if (Players.Select(q => q.Id).Contains(jsonPlayerId))
                 {
-                    currentPlayer = Players.Where(r => r.Id == jsonPlayerId).First();
-
-                    //using (WebClient client = new WebClient())
-                    //{                        
-                    //    //string bioJsonHTMLLink = string.Format("http://statsapi.web.nhl.com/api/v1/people/{0}", jsonPlayerId);
-                    //    //string htmlCode = client.DownloadString(bioJsonHTMLLink);
-                    //    //JsonBios jsonBiosPlayers = JsonConvert.DeserializeObject<JsonBios>(htmlCode);
-                    //    //if (jsonBiosPlayers.people.First().currentTeam != null)
-                    //    //    currentPlayer.NHLTeam = Utilities.GetNHLTeamFromString(jsonBiosPlayers.people.First().currentTeam.triCode);
-                    //}                                        
+                    currentPlayer = Players.Where(r => r.Id == jsonPlayerId).First();                                
                 }
                 else
                 {

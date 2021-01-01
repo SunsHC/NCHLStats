@@ -23,7 +23,7 @@ namespace NCHLStats
 
             // Stats de la semaine
             StatsManager manager = new StatsManager();
-            manager.MasterMode = true;
+            manager.MasterMode = false;
 
             Console.Write("Semaine (1-27): ");
             int week = Convert.ToInt32(Console.ReadLine());
@@ -32,7 +32,7 @@ namespace NCHLStats
             Console.WriteLine();
 
             Console.ForegroundColor = ConsoleColor.Gray;
-            Console.WriteLine("Entrer la date du mardi ");
+            Console.WriteLine($"Entrer la date du mardi correspondant au début de la semaine {week}");
 
             Console.ForegroundColor = ConsoleColor.DarkGray;
             Console.Write("Jour (1-31): ");
@@ -72,56 +72,48 @@ namespace NCHLStats
 
 
 
-            // Stats de saison
 
-            //Console.ForegroundColor = ConsoleColor.Gray;
-            //Console.WriteLine();
-            //Console.WriteLine("Generer aussi les stats de la saison? (y/n)");
-            //string mode = Console.ReadLine();
+            manager = new StatsManager();
+            manager.MasterMode = false;
 
-            string mode = "y";
-            if (mode == "y")
+            using (StreamReader textReader = new StreamReader("DateDebutSaison.txt"))
             {
-                manager = new StatsManager();
-                manager.MasterMode = true;
+                string[] date = textReader.ReadLine().Split('-');
+                year = Convert.ToInt32(date[0]);
+                month = Convert.ToInt32(date[1]);
+                day = Convert.ToInt32(date[2]);
 
-                using (StreamReader textReader = new StreamReader("SeasonStartDate.txt"))
+                startDate = new DateTime(year, month, day, new System.Globalization.GregorianCalendar());
+            }
+
+            int endDay = DateTime.Now.Day;
+            int endMonth = DateTime.Now.Month;
+            int endYear = DateTime.Now.Year;
+
+            Console.WriteLine();
+
+            endDate = new DateTime(endYear, endMonth, endDay, new System.Globalization.GregorianCalendar());
+
+            manager.RetrieveWebData(startDate, endDate);
+
+            manager.LoadNCHLDB();
+
+            if (manager.MasterMode)
+                manager.GetSystemRankings();
+
+            manager.SaveLeagueData(false);
+
+            if (manager.MasterMode)
+            {
+                foreach (NCHLTeam team in Enum.GetValues(typeof(NCHLTeam)))
                 {
-                    year = Convert.ToInt32(textReader.ReadLine());
-                    month = Convert.ToInt32(textReader.ReadLine());
-                    day = Convert.ToInt32(textReader.ReadLine());
+                    if (team == NCHLTeam.AGL)
+                        continue;
 
-                    startDate = new DateTime(year, month, day, new System.Globalization.GregorianCalendar());
-                }
-
-                int endDay = DateTime.Now.Day;
-                int endMonth = DateTime.Now.Month;
-                int endYear = DateTime.Now.Year;
-
-                Console.WriteLine();
-
-                endDate = new DateTime(endYear, endMonth, endDay, new System.Globalization.GregorianCalendar());
-
-                manager.RetrieveWebData(startDate, endDate);
-
-                manager.LoadNCHLDB();
-
-                if (manager.MasterMode)
-                    manager.GetSystemRankings();
-
-                manager.SaveLeagueData(false);
-
-                if (manager.MasterMode)
-                {
-                    foreach (NCHLTeam team in Enum.GetValues(typeof(NCHLTeam)))
-                    {
-                        if (team == NCHLTeam.AGL)
-                            continue;
-
-                        manager.SaveReportData(team, false);
-                    }
+                    manager.SaveReportData(team, false);
                 }
             }
+            
         }        
     }
 }

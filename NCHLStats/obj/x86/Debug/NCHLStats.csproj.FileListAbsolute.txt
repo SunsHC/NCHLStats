@@ -41,3 +41,13 @@ E:\DOCS\prog\NCHLStats\NCHLStats\NCHLStats\obj\x86\Debug\NCHLStats.csprojResolve
 E:\DOCS\prog\NCHLStats\NCHLStats\NCHLStats\obj\x86\Debug\NCHLStats.csproj.CoreCompileInputs.cache
 E:\DOCS\prog\NCHLStats\NCHLStats\NCHLStats\obj\x86\Debug\NCHLStats.csproj.CopyComplete
 E:\DOCS\prog\NCHLStats\NCHLStats\NCHLStats\bin\Debug\NCHLStats.exe.config
+C:\Users\alex\Documents\GitHub\NCHLStats\NCHLStats\bin\Debug\NCHLStats.exe.config
+C:\Users\alex\Documents\GitHub\NCHLStats\NCHLStats\bin\Debug\NCHLStats.exe
+C:\Users\alex\Documents\GitHub\NCHLStats\NCHLStats\bin\Debug\NCHLStats.pdb
+C:\Users\alex\Documents\GitHub\NCHLStats\NCHLStats\bin\Debug\Newtonsoft.Json.pdb
+C:\Users\alex\Documents\GitHub\NCHLStats\NCHLStats\bin\Debug\Newtonsoft.Json.xml
+C:\Users\alex\Documents\GitHub\NCHLStats\NCHLStats\obj\x86\Debug\NCHLStats.csprojAssemblyReference.cache
+C:\Users\alex\Documents\GitHub\NCHLStats\NCHLStats\obj\x86\Debug\NCHLStats.csproj.CoreCompileInputs.cache
+C:\Users\alex\Documents\GitHub\NCHLStats\NCHLStats\obj\x86\Debug\NCHLStats.csproj.CopyComplete
+C:\Users\alex\Documents\GitHub\NCHLStats\NCHLStats\obj\x86\Debug\NCHLStats.exe
+C:\Users\alex\Documents\GitHub\NCHLStats\NCHLStats\obj\x86\Debug\NCHLStats.pdb
