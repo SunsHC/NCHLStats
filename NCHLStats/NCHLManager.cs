@@ -185,9 +185,6 @@ namespace NCHLStats
             }
         }
 
-            
-
-
         public void SaveReportData(NCHLTeam team, bool isWeekStats)
         {
             try
@@ -338,15 +335,18 @@ namespace NCHLStats
                     writer.WriteEndDocument();
                 }
 
-                if (isWeekStats)
+                if (MasterMode)
                 {
-                    using (StreamWriter jsonWriter = new StreamWriter($"Semaines\\Semaine{CurrentWeek}.json"))
+                    if (isWeekStats)
                     {
-                        jsonWriter.Write(JsonConvert.SerializeObject(Players));
+                        using (StreamWriter jsonWriter = new StreamWriter($"Semaines\\Semaine{CurrentWeek}.json"))
+                        {
+                            jsonWriter.Write(JsonConvert.SerializeObject(Players));
+                        }
                     }
-                }
 
-                LoadJSONs();
+                    LoadJSONs();
+                }
             }
             catch
             {
@@ -567,7 +567,5 @@ namespace NCHLStats
                 statsForPosition.GeneratePlayerStats();
             }
         }
-
-        
     }
 }
