@@ -8,6 +8,7 @@ using System.Collections.ObjectModel;
 using System.Net;
 using Newtonsoft.Json;
 using System.Threading;
+using System.Globalization;
 
 namespace NCHLStats
 {
@@ -547,9 +548,9 @@ namespace NCHLStats
                     if (p.blockedShots != null && (statsType & StatsType.BkS) == StatsType.BkS)
                         currentPlayer.BkS += Convert.ToInt32(p.blockedShots);
                     if (p.timeOnIce != null && (statsType & StatsType.TOI) == StatsType.TOI)
-                        currentPlayer.TOI += (int)Math.Round(Convert.ToDouble(p.timeOnIce) / 60);
+                        currentPlayer.TOI += (int)Math.Round(Convert.ToDouble(p.timeOnIce, CultureInfo.InvariantCulture) / 60);
                     if (p.timeOnIcePerGame != null && (statsType & StatsType.TOIPG) == StatsType.TOIPG)
-                        currentPlayer.TOIPG += (int)Math.Round(Convert.ToDouble(p.timeOnIcePerGame) / 60);
+                        currentPlayer.TOIPG += (int)Math.Round(Convert.ToDouble(p.timeOnIcePerGame, CultureInfo.InvariantCulture) / 60);
                 }
             }
         }
